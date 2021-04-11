@@ -26,5 +26,9 @@
     "prettier": "^2.0.5",
     "snowpack": "^3.0.1",
     "typescript": "^4.0.0"
-  }
+  },
+  "name": "ecommercex-frontend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT"
 }
