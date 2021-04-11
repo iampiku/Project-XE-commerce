@@ -1,0 +1,32 @@
+{
+    "name": "@types/convert-source-map",
+    "version": "1.5.1",
+    "description": "TypeScript definitions for convert-source-map",
+    "license": "MIT",
+    "contributors": [
+        {
+            "name": "Andrew Gaspar",
+            "url": "https://github.com/AndrewGaspar",
+            "githubUsername": "AndrewGaspar"
+        },
+        {
+            "name": "Melvin Groenhoff",
+            "url": "https://github.com/mgroenhoff",
+            "githubUsername": "mgroenhoff"
+        },
+        {
+            "name": "TeamworkGuy2",
+            "url": "https://github.com/TeamworkGuy2",
+            "githubUsername": "TeamworkGuy2"
+        }
+    ],
+    "main": "",
+    "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+    },
+    "scripts": {},
+    "dependencies": {},
+    "typesPublisherContentHash": "1626152112422fb4950c5102f4294d7031895716de843df640937c26cfb7b919",
+    "typeScriptVersion": "2.0"
+}
