@@ -1,21 +1,12 @@
 import React from "react";
 import { Header } from "./components";
+import { Container } from "./containers";
 
 const App: React.FC = () => {
-  const [data, setData] = React.useState({ hi: 123 });
-
-  async function getData() {
-    const resp = await (await fetch("/api/data")).json();
-    setData({ ...resp });
-  }
-
-  React.useEffect(() => {
-    getData();
-  }, []);
-
   return (
     <React.Fragment>
       <Header />
+      <Container />
     </React.Fragment>
   );
 };

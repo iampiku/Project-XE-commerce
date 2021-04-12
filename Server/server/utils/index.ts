@@ -1,3 +1,8 @@
+import { v4 } from "uuid";
+
+/** Geneerating UUID */
+export const uuid = v4;
+
 /** HTTP RESPONSE CODES */
 export const OK = 200;
 export const MULTIPLE_CHOICE = 300;
@@ -16,3 +21,17 @@ export const SERVICE_UNAVAILBLE = 503;
 /** Typed {Req, Res} from Express Middle */
 export type Request = Express.Request;
 export type Response = Express.Response;
+
+/** When BadErrors Occurs On Response */
+export function warn(res: any, error: any) {
+  const er = error.errors || error;
+  return res.status(INTERNAL_SERVER_ERROR).send(er);
+}
+
+/** Interfaces */
+export interface SignupInterface {
+  email: string;
+  name: string;
+  password: string;
+  username: string;
+}

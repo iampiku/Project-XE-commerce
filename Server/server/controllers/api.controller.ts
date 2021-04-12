@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { User } from "../../database/schema";
 import { INTERNAL_SERVER_ERROR, OK } from "../utils";
+import UserController from "./user.controller";
 
 const router = Router();
 
@@ -19,19 +19,7 @@ router.get("/data", async (req, res, next) => {
   next();
 });
 
-router.get("/users", async (req, res, next) => {
-  try {
-    const users = await User.findAll();
-
-    res.status(OK).send({
-      status: "success",
-      statusCode: 200,
-      users,
-    });
-  } catch (error) {
-    res.status(INTERNAL_SERVER_ERROR).send({ error });
-  }
-  next();
-});
+// User Controller
+router.use("/users", UserController);
 
 export default router;
