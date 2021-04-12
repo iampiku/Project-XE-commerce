@@ -1,4 +1,5 @@
 import React from "react";
+import { Header } from "./components";
 
 const App: React.FC = () => {
   const [data, setData] = React.useState({ hi: 123 });
@@ -14,10 +15,7 @@ const App: React.FC = () => {
 
   return (
     <React.Fragment>
-      <div className="bg-gray-50 p-3 mb-6">
-        <h1>Welcome To Project EcommerceX</h1>
-      </div>
-      <pre>{JSON.stringify(data, null, 3)}</pre>
+      <Header />
     </React.Fragment>
   );
 };

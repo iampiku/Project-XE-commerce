@@ -16,7 +16,6 @@ export async function serverStart() {
         status: "OK",
         statusCode: 200,
         ip: "192.168.52.3",
-        headers: { ...req.headers },
         timestamp: Date.now(),
       });
     });
