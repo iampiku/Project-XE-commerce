@@ -27,7 +27,7 @@ async function buildSchema() {
     "User",
     {
       name: { type: S.STRING, allowNull: false },
-      uuid: { type: S.UUIDV4, allowNull: false, primaryKey: true },
+      id: { type: S.UUIDV4, allowNull: false, primaryKey: true },
       username: { type: S.STRING, allowNull: false },
       email: { type: S.STRING, allowNull: false, unique: true },
       password: { type: S.STRING, allowNull: false },
@@ -37,3 +37,4 @@ async function buildSchema() {
 }
 
 export { connectToDatabase };
+

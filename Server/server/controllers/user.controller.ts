@@ -1,6 +1,13 @@
 import { Router } from "express";
 import { User } from "../../database/schema";
-import { OK, SignupInterface, uuid, warn } from "../utils";
+import {
+  generateAuthToken,
+  OK,
+  setAuthorizationHeader,
+  SignupInterface,
+  uuid,
+  warn,
+} from "../utils";
 
 const router = Router();
 
@@ -24,21 +31,48 @@ router.get("/", async (req, res, next) => {
 router.post("/signup", async (req, res, next) => {
   try {
     const { name, email, password, username } = req.body as SignupInterface;
-    console.log(req.body);
 
     const payload = {
       name,
       email,
-      uuid: uuid(),
+      id: uuid(),
       username,
       password,
     };
 
-    const resp = await User.create(payload);
+    const resp: any = await User.create(payload);
+    const token = generateAuthToken(resp);
 
-    return res.status(OK).send(resp);
+    setAuthorizationHeader(res, token);
+
+    return res.status(OK).send({ token, success: true, statusCode: 200 });
   } catch (error) {
     warn(res, error);
+  }
+  next();
+});
+
+// [POST] User Login
+router.post("/login", async (req, res, next) => {
+  try {
+    const { username, password } = req.body;
+    if (username === "" || password === "") {
+      throw new Error(`fields are not formatted correctly`);
+    }
+
+    // check in database if DataFragment Found
+    const resp: any = await User.findOne({ where: { username, password } });
+
+    if (resp === null) {
+      throw new Error("Credentials Not matched");
+    }
+
+    const token = generateAuthToken(resp);
+
+    setAuthorizationHeader(res, token);
+    return res.status(OK).send({ token, success: true, statusCode: 200 });
+  } catch (error) {
+    warn(res, "Credentials Not matched");
   }
   next();
 });

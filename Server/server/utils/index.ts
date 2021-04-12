@@ -1,3 +1,4 @@
+import { sign } from "jsonwebtoken";
 import { v4 } from "uuid";
 
 /** Geneerating UUID */
@@ -24,8 +25,12 @@ export type Response = Express.Response;
 
 /** When BadErrors Occurs On Response */
 export function warn(res: any, error: any) {
-  const er = error.errors || error;
-  return res.status(INTERNAL_SERVER_ERROR).send(er);
+  return res.status(INTERNAL_SERVER_ERROR).send({
+    error: error.errors || error,
+    message: "Error Occured",
+    status: false,
+    statusCode: INTERNAL_SERVER_ERROR,
+  });
 }
 
 /** Interfaces */
@@ -34,4 +39,20 @@ export interface SignupInterface {
   name: string;
   password: string;
   username: string;
+}
+
+/** JSONWebToken SECRET */
+export const SECRET = `BHS@^%&%!*&^87/#$bj1agcs%$#^%$@%^fgyavsdu765712678356416JHSA^&@%^&!$%$`;
+
+/** Generate Auth Token from Resp */
+export function generateAuthToken(resp: any) {
+  return sign(
+    { uuid: resp.uuid, username: resp.uuid, email: resp.email },
+    SECRET
+  );
+}
+
+/** Set Authorization Header */
+export function setAuthorizationHeader(res: any, token: string) {
+  res.setHeader("Authorization", `Bearer ${token}`);
 }
