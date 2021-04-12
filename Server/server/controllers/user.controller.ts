@@ -6,7 +6,7 @@ import {
   setAuthorizationHeader,
   SignupInterface,
   uuid,
-  warn,
+  warn
 } from "../utils";
 
 const router = Router();
@@ -72,8 +72,26 @@ router.post("/login", async (req, res, next) => {
     setAuthorizationHeader(res, token);
     return res.status(OK).send({ token, success: true, statusCode: 200 });
   } catch (error) {
-    warn(res, "Credentials Not matched");
+    warn(res, "Credentials are not matching!");
   }
+  next();
+});
+
+// [POST] Reset Password Link
+router.post("/reset-password", async (req, res, next) => {
+  try {
+    const { username, email } = req.body;
+    const resp = await User.findOne({ where: { username, email } });
+
+    const resetToken = generateAuthToken(resp);
+    return res.status(OK).send({
+      resetToken,
+      timestamp: Date.now(),
+    });
+  } catch (error) {
+    warn(res, "Credentials are not matching!");
+  }
+
   next();
 });
 
