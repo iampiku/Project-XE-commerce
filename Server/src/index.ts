@@ -1,1 +1,3 @@
-console.log(`server is rupp...`)
+import { serverStart } from "../server";
+
+serverStart();

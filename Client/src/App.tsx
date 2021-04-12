@@ -1,41 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import logo from './logo.svg';
-import './index.css';
+import React from "react";
 
-interface AppProps {}
+const App: React.FC = () => {
+  const [data, setData] = React.useState({ hi: 123 });
 
-function App({}: AppProps) {
-  // Create the count state.
-  const [count, setCount] = useState(0);
-  // Create the counter (+1 every second).
-  useEffect(() => {
-    const timer = setTimeout(() => setCount(count + 1), 1000);
-    return () => clearTimeout(timer);
-  }, [count, setCount]);
-  // Return the App component.
+  async function getData() {
+    const resp = await (await fetch("/api/data")).json();
+    setData({ ...resp });
+  }
+
+  React.useEffect(() => {
+    getData();
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <p>
-          Page has been open for <code>{count}</code> seconds.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </p>
-      </header>
-    </div>
+    <React.Fragment>
+      <div className="bg-gray-50 p-3 mb-6">
+        <h1>Welcome To Project EcommerceX</h1>
+      </div>
+      <pre>{JSON.stringify(data, null, 3)}</pre>
+    </React.Fragment>
   );
-}
+};
 
 export default App;

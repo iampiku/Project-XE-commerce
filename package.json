@@ -10,7 +10,7 @@
   },
   "scripts": {
     "start": "yarn dev",
-    "dev": "concurrently -m=5 \"yarn dev:client\" \"yarn dev:server\"",
+    "dev": "concurrently -m=5 -k -s first \"yarn dev:server\" \"yarn dev:client\"",
     "dev:client": "cd Client && yarn start",
     "dev:server": "cd Server && yarn dev",
     "install": "concurrently -m=5 \"yarn install:client\" \"yarn install:server\"",
