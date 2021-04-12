@@ -23,6 +23,7 @@
     "@types/cors": "^2.8.10",
     "@types/morgan": "^1.9.2",
     "morgan": "^1.10.0",
-    "nodemon": "^2.0.7"
+    "nodemon": "^2.0.7",
+    "sqlite3": "^5.0.2"
   }
 }

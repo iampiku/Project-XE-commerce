@@ -1,7 +1,8 @@
 import cors from "cors";
 import express, { json, urlencoded } from "express";
 import morgan from "morgan";
-import { OK } from "./utils";
+import { connectToDatabase } from '../database';
+import { APIController } from "./controllers";
 const PORT = 5000 || process.env.PORT;
 
 const app = express();
@@ -9,16 +10,9 @@ const app = express();
 export async function serverStart() {
   try {
     await serverConfig();
+    await connectToDatabase();
 
-    app.get("/api/data", async (req, res, next) => {
-      res.status(OK).send({
-        msg: "server is running",
-        status: "OK",
-        statusCode: 200,
-        ip: "192.168.52.3",
-        timestamp: Date.now(),
-      });
-    });
+    app.use('/api', APIController)
 
     app.listen(PORT, () =>
       console.log(`server already started on http://localhost:${PORT}`)
