@@ -1,6 +1,7 @@
 import cors from "cors";
 import express, { json, urlencoded } from "express";
 import morgan from "morgan";
+import { OK } from "./utils";
 const PORT = 5000 || process.env.PORT;
 
 const app = express();
@@ -10,11 +11,13 @@ export async function serverStart() {
     await serverConfig();
 
     app.get("/api/data", async (req, res, next) => {
-      res.status(200).send({
+      res.status(OK).send({
         msg: "server is running",
         status: "OK",
         statusCode: 200,
         ip: "192.168.52.3",
+        headers: { ...req.headers },
+        timestamp: Date.now(),
       });
     });
 
