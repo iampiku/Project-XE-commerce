@@ -1,13 +1,15 @@
 import Sequelize from "sequelize";
 import { db } from "..";
+import { uuid } from "../../server/utils";
 
 export const User: Sequelize.ModelCtor<Sequelize.Model<any, any>> = db.define(
   "User",
   {
-    Name: { type: Sequelize.STRING, allowNull: false },
-    Username: { type: Sequelize.STRING, allowNull: false },
-    Email: { type: Sequelize.STRING, allowNull: false, unique: true },
-    Password: { type: Sequelize.STRING, allowNull: false },
+    name: { type: Sequelize.STRING, allowNull: false },
+    id: { type: Sequelize.UUIDV4, allowNull: false, primaryKey: true },
+    username: { type: Sequelize.STRING, allowNull: false },
+    email: { type: Sequelize.STRING, allowNull: false, unique: true },
+    password: { type: Sequelize.STRING, allowNull: false },
   },
   { freezeTableName: true }
 );

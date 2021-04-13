@@ -1,7 +1,7 @@
 import cors from "cors";
 import express, { json, urlencoded } from "express";
 import morgan from "morgan";
-import { connectToDatabase } from '../database';
+import { connectToDatabase } from "../database";
 import { APIController } from "./controllers";
 const PORT = 5000 || process.env.PORT;
 
@@ -12,7 +12,7 @@ export async function serverStart() {
     await serverConfig();
     await connectToDatabase();
 
-    app.use('/api', APIController)
+    app.use("/api", APIController);
 
     app.listen(PORT, () =>
       console.log(`server already started on http://localhost:${PORT}`)

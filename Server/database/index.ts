@@ -20,20 +20,21 @@ async function connectToDatabase() {
   }
 }
 
-
 /** Generating Relevant Schemas */
 async function buildSchema() {
   //* For User Schema */
   db.define(
     "User",
     {
-      Name: { type: S.STRING, allowNull: false },
-      Username: { type: S.STRING, allowNull: false },
-      Email: { type: S.STRING, allowNull: false, unique: true },
-      Password: { type: S.STRING, allowNull: false },
+      name: { type: S.STRING, allowNull: false },
+      id: { type: S.UUIDV4, allowNull: false, primaryKey: true },
+      username: { type: S.STRING, allowNull: false },
+      email: { type: S.STRING, allowNull: false, unique: true },
+      password: { type: S.STRING, allowNull: false },
     },
     { freezeTableName: true }
   );
 }
 
 export { connectToDatabase };
+
