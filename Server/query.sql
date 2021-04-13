@@ -9,11 +9,23 @@ CREATE TABLE IF NOT EXISTS `User` (
     `updatedAt` DATETIME NOT NULL
 );
 
+-- To Create Product Table
+CREATE TABLE IF NOT EXISTS `Products` (
+    `id` UUIDV4 PRIMARY KEY, 
+    `name` VARCHAR(50) NOT NULL, 
+    `slug` VARCHAR(50) NOT NULL, 
+    `description` TEXT NOT NULL, 
+    `price` DECIMAL(10,2) NOT NULL, 
+    `inStock` INTEGER NOT NULL, 
+    `createdAt` DATETIME NOT NULL, 
+    `updatedAt` DATETIME NOT NULL
+);
+
+
 PRAGMA INDEX_LIST(`User`);
-
 PRAGMA INDEX_INFO(`sqlite_autoindex_User_1`);
-
 PRAGMA INDEX_INFO(`sqlite_autoindex_User_2`);
+CREATE INDEX `products_slug` ON `Products` (`slug`);
 
 -- Creating new User
 INSERT INTO

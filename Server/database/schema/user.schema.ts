@@ -1,6 +1,5 @@
 import Sequelize from "sequelize";
 import { db } from "..";
-import { uuid } from "../../server/utils";
 
 export const User: Sequelize.ModelCtor<Sequelize.Model<any, any>> = db.define(
   "User",
