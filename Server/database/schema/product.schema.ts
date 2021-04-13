@@ -2,7 +2,7 @@ import S from "sequelize";
 import slugify from "slugify";
 import { db } from "..";
 
-export const Product = db.define(
+export const Product: S.ModelCtor<S.Model<any, any>> = db.define(
   "Products",
   {
     id: { type: S.UUIDV4, primaryKey: true },

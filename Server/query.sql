@@ -21,66 +21,19 @@ CREATE TABLE IF NOT EXISTS `Products` (
     `updatedAt` DATETIME NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS `Categories` (
+    `id` UUIDV4 NOT NULL PRIMARY KEY, 
+    `name` VARCHAR(50) NOT NULL, 
+    `slug` VARCHAR(50) NOT NULL, 
+    `description` TEXT, 
+    `createdAt` DATETIME NOT NULL, 
+    `updatedAt` DATETIME NOT NULL
+);
+
 
 PRAGMA INDEX_LIST(`User`);
 PRAGMA INDEX_INFO(`sqlite_autoindex_User_1`);
 PRAGMA INDEX_INFO(`sqlite_autoindex_User_2`);
 CREATE INDEX `products_slug` ON `Products` (`slug`);
-
--- Creating new User
-INSERT INTO
-    `User` (
-        `name`,
-        `id`,
-        `username`,
-        `email`,
-        `password`,
-        `createdAt`,
-        `updatedAt`
-    )
-VALUES
-    ($ 1, $ 2, $ 3, $ 4, $ 5, $ 6, $ 7);
-
--- To Login / Access Account Profile User
-SELECT
-    `name`,
-    `id`,
-    `username`,
-    `email`,
-    `password`,
-    `createdAt`,
-    `updatedAt`
-FROM
-    `User` AS `User`
-WHERE
-    `User`.`username` = 'sounishnath003'
-    AND `User`.`password` = '1234'
-LIMIT
-    1;
-
--- To Get all Users Stored
-SELECT
-    `name`,
-    `id`,
-    `username`,
-    `email`,
-    `password`,
-    `createdAt`,
-    `updatedAt`
-FROM
-    `User` AS `User`;
-
--- Reset Password Link
-SELECT
-    `name`,
-    `id`,
-    `username`,
-    `email`,
-    `password`,
-    `createdAt`,
-    `updatedAt`
-FROM
-    `User` AS `User`
-WHERE
-    `User`.`username` = 'sounishnath003'
-    AND `User`.`email` = 'a@a.com';
+PRAGMA INDEX_LIST(`Categories`)
+PRAGMA INDEX_INFO(`sqlite_autoindex_Categories_1`)
