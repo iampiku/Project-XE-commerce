@@ -37,4 +37,3 @@ async function buildSchema() {
 }
 
 export { connectToDatabase };
-
