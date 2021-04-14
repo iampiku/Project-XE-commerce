@@ -22,7 +22,7 @@ export const Product: S.ModelCtor<S.Model<any, any>> = db.define(
     hooks: {
       beforeValidate: function (product: any, options) {
         product.slug = slugify(product.name, { lower: true });
-        product.id = uuid;
+        product.id = uuid();
       },
     },
   }

@@ -1,4 +1,5 @@
 import { Model, ModelCtor, STRING, UUIDV4 } from "sequelize";
+import { v4 as uuid } from 'uuid';
 import { db } from "..";
 
 export const Address: ModelCtor<Model<any, any>> = db.define(
@@ -13,5 +14,10 @@ export const Address: ModelCtor<Model<any, any>> = db.define(
   {
     freezeTableName: true,
     tableName: "Addresses",
+    hooks: {
+      beforeValidate: function(address: any, options) {
+        address.id = uuid();
+      }
+    }
   }
 );
