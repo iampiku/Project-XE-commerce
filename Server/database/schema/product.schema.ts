@@ -1,6 +1,9 @@
 import S from "sequelize";
 import slugify from "slugify";
+import { v4 } from "uuid";
 import { db } from "..";
+
+const uuid = v4;
 
 export const Product: S.ModelCtor<S.Model<any, any>> = db.define(
   "Products",
@@ -19,6 +22,7 @@ export const Product: S.ModelCtor<S.Model<any, any>> = db.define(
     hooks: {
       beforeValidate: function (product: any, options) {
         product.slug = slugify(product.name, { lower: true });
+        product.id = uuid;
       },
     },
   }

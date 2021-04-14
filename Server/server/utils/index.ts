@@ -92,3 +92,10 @@ export function setAuthorizationHeader(res: any, token: string) {
 /** ON Successfull Response */
 type HttpResp = { statusCode: number; status: boolean };
 export const SUCCESS: HttpResp = { statusCode: OK, status: true };
+
+/** Order Status - [Processed, Delivered, Shipped] */
+export const ORDER_STATUS = {
+  PROCESSED: { ordinal: 0 },
+  DELIVERED: { ordinal: 1 },
+  SHIPPED: { ordinal: 2 },
+};
