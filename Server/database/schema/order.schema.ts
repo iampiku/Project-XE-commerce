@@ -36,5 +36,8 @@ export const Order: ModelCtor<Model<any, any>> = db.define(
   {
     freezeTableName: true,
     tableName: "Orders",
+    indexes: [
+        {fields: ['trackingId']}
+    ]
   }
 );
