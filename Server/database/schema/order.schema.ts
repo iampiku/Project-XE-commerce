@@ -1,4 +1,5 @@
 import _ from "lodash";
+import {v4 as uuid} from 'uuid';
 import { Model, ModelCtor, STRING, UUIDV4, VIRTUAL } from "sequelize";
 import { db } from "..";
 
@@ -36,6 +37,11 @@ export const Order: ModelCtor<Model<any, any>> = db.define(
   {
     freezeTableName: true,
     tableName: "Orders",
+    hooks: {
+      beforeValidate: function(order: any, options) {
+        order.id = uuid();
+      }
+    },
     indexes: [
         {fields: ['trackingId']}
     ]
