@@ -1,6 +1,5 @@
 import { join } from "path";
-import S, { Sequelize } from "sequelize";
-import slugify from "slugify";
+import { Sequelize } from "sequelize";
 
 const dir = join(__dirname, "");
 
