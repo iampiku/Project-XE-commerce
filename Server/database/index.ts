@@ -3,6 +3,7 @@ import { join } from "path";
 import S, { Sequelize } from "sequelize";
 import slugify from "slugify";
 import { v4 as uuid } from "uuid";
+import { buildAssociationsBetweenSchemas } from "./schema";
 
 const dir = join(__dirname, "");
 
@@ -36,6 +37,7 @@ async function buildSchema() {
   // CreateProductTagSchema();
   // CreateTagSchema();
   // CreateUserSchema();
+  buildAssociationsBetweenSchemas();
 }
 
 // * Generation of Schemas Architecture
