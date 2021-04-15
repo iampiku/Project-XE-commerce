@@ -9,6 +9,7 @@ export const CategoryImage: ModelCtor<Model<any, any>> = db.define(
     filepath: { type: STRING, allowNull: false },
     originalName: { type: STRING, allowNull: false },
     fileSize: { type: STRING, allowNull: false },
+    categoryId: { type: UUIDV4, allowNull: false },
   },
   {
     freezeTableName: true,

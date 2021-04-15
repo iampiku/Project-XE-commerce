@@ -10,6 +10,7 @@ export const Address: ModelCtor<Model<any, any>> = db.define(
     address: { type: STRING(30), allowNull: false },
     country: { type: STRING(30), allowNull: false },
     zipCode: { type: STRING(30), allowNull: false },
+    userId: {type: UUIDV4, allowNull: false},
   },
   {
     freezeTableName: true,

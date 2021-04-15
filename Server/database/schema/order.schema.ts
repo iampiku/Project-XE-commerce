@@ -1,5 +1,5 @@
 import _ from "lodash";
-import {v4 as uuid} from 'uuid';
+import { v4 as uuid } from "uuid";
 import { Model, ModelCtor, STRING, UUIDV4, VIRTUAL } from "sequelize";
 import { db } from "..";
 
@@ -33,17 +33,21 @@ export const Order: ModelCtor<Model<any, any>> = db.define(
         });
       },
     },
+    userId: { type: UUIDV4, allowNull: false },
+    addressId: {
+      type: UUIDV4,
+      allowNull: false,
+      references: { model: `Addresses`, key: "id" },
+    },
   },
   {
     freezeTableName: true,
     tableName: "Orders",
     hooks: {
-      beforeValidate: function(order: any, options) {
+      beforeValidate: function (order: any, options) {
         order.id = uuid();
-      }
+      },
     },
-    indexes: [
-        {fields: ['trackingId']}
-    ]
+    indexes: [{ fields: ["trackingId", 'userId'] }],
   }
 );
