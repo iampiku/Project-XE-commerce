@@ -14,9 +14,9 @@ export const db = new Sequelize({
 
 async function connectToDatabase() {
   try {
+    await db.sync();
     await db.authenticate();
     await buildSchema();
-    await db.sync();
     console.log(`## database succesfully connected!!`);
   } catch (error) {
     throw new Error(JSON.stringify(error, null, 3));
@@ -25,17 +25,17 @@ async function connectToDatabase() {
 
 /** Generating Relevant Schemas */
 async function buildSchema() {
-  CreateAddressSchema();
-  CreateCategoryImageSchema();
-  CreateCategorySchema();
-  CreateCommentSchema();
-  CreateOrderItemSchema();
-  CreateOrderSchema();
-  CreateProductCategorySchema();
-  CreateProductSchema();
-  CreateProductTagSchema();
-  CreateTagSchema();
-  CreateUserSchema();
+  // CreateAddressSchema();
+  // CreateCategoryImageSchema();
+  // CreateCategorySchema();
+  // CreateCommentSchema();
+  // CreateOrderItemSchema();
+  // CreateOrderSchema();
+  // CreateProductCategorySchema();
+  // CreateProductSchema();
+  // CreateProductTagSchema();
+  // CreateTagSchema();
+  // CreateUserSchema();
 }
 
 // * Generation of Schemas Architecture
