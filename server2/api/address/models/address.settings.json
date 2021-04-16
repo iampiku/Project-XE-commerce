@@ -1,0 +1,35 @@
+{
+  "kind": "collectionType",
+  "collectionName": "addresses",
+  "info": {
+    "name": "Address",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "city": {
+      "type": "string",
+      "required": true
+    },
+    "address": {
+      "type": "string",
+      "required": true
+    },
+    "country": {
+      "type": "string",
+      "required": true
+    },
+    "zipCode": {
+      "type": "string",
+      "required": true
+    },
+    "users_permissions_user": {
+      "plugin": "users-permissions",
+      "model": "user"
+    }
+  }
+}
