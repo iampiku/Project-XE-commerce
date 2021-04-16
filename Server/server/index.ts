@@ -2,6 +2,7 @@ import cors from "cors";
 import express, { json, urlencoded } from "express";
 import morgan from "morgan";
 import { connectToDatabase } from "../database";
+import { buildAssociationsBetweenSchemas } from "../database/schema";
 import { APIController } from "./controllers";
 const PORT = 5000 || process.env.PORT;
 
@@ -11,6 +12,9 @@ export async function serverStart() {
   try {
     await serverConfig();
     await connectToDatabase();
+    await (async () => {
+      await buildAssociationsBetweenSchemas();
+    })();
 
     app.use("/api", APIController);
 

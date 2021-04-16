@@ -1,4 +1,4 @@
-import { Model, ModelCtor, STRING, UUIDV4 } from "sequelize";
+import { Model, ModelCtor, Sequelize, STRING, UUIDV4 } from "sequelize";
 import { v4 as uuid } from 'uuid';
 import { db } from "..";
 

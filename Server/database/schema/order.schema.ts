@@ -48,6 +48,6 @@ export const Order: ModelCtor<Model<any, any>> = db.define(
         order.id = uuid();
       },
     },
-    indexes: [{ fields: ["trackingId", 'userId'] }],
+    indexes: [{ fields: ["trackingId"] }],
   }
 );

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { User } from "../../database/schema";
+import { Address, Product, ProductCategory, User } from "../../database/schema";
 import { INTERNAL_SERVER_ERROR, OK, SUCCESS, warn } from "../utils";
 
 const router = Router();
@@ -7,7 +7,9 @@ const router = Router();
 // [GET] All Users
 router.get("/", async (req, res, next) => {
   try {
-    const users = await User.findAll();
+    const users = await User.findAll({
+      include: [{ model: Address, as: "addresses" }],
+    });
 
     res.status(OK).send({
       ...SUCCESS,

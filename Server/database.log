@@ -6,42 +6,70 @@ $ nodemon --exec ts-node ./src/index.ts
 [33m[nodemon] watching path(s): *.*[39m
 [33m[nodemon] watching extensions: ts,json[39m
 [32m[nodemon] starting `ts-node ./src/index.ts`[39m
+Executing (default): SELECT 1+1 AS result
+Executing (default): DROP TABLE IF EXISTS `Users`;
+Executing (default): DROP TABLE IF EXISTS `Tags`;
+Executing (default): DROP TABLE IF EXISTS `ProductTags`;
+Executing (default): DROP TABLE IF EXISTS `ProductCategories`;
+Executing (default): DROP TABLE IF EXISTS `Products`;
+Executing (default): DROP TABLE IF EXISTS `OrderItems`;
+Executing (default): DROP TABLE IF EXISTS `Orders`;
+Executing (default): DROP TABLE IF EXISTS `Comments`;
+Executing (default): DROP TABLE IF EXISTS `CategoryImages`;
+Executing (default): DROP TABLE IF EXISTS `Categories`;
+Executing (default): DROP TABLE IF EXISTS `Addresses`;
+Executing (default): DROP TABLE IF EXISTS `Addresses`;
 Executing (default): CREATE TABLE IF NOT EXISTS `Addresses` (`id` UUIDV4 NOT NULL PRIMARY KEY, `city` VARCHAR(30) NOT NULL, `address` VARCHAR(30) NOT NULL, `country` VARCHAR(30) NOT NULL, `zipCode` VARCHAR(30) NOT NULL, `userId` UUIDV4 NOT NULL, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL);
 Executing (default): PRAGMA INDEX_LIST(`Addresses`)
 Executing (default): PRAGMA INDEX_INFO(`sqlite_autoindex_Addresses_1`)
+Executing (default): DROP TABLE IF EXISTS `Categories`;
 Executing (default): CREATE TABLE IF NOT EXISTS `Categories` (`id` UUIDV4 NOT NULL PRIMARY KEY, `name` VARCHAR(50) NOT NULL, `slug` VARCHAR(50) NOT NULL, `description` TEXT, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL);
 Executing (default): PRAGMA INDEX_LIST(`Categories`)
 Executing (default): PRAGMA INDEX_INFO(`sqlite_autoindex_Categories_1`)
+Executing (default): DROP TABLE IF EXISTS `CategoryImages`;
 Executing (default): CREATE TABLE IF NOT EXISTS `CategoryImages` (`id` UUIDV4 NOT NULL PRIMARY KEY, `filename` VARCHAR(255) NOT NULL, `filepath` VARCHAR(255) NOT NULL, `originalName` VARCHAR(255) NOT NULL, `fileSize` VARCHAR(255) NOT NULL, `categoryId` UUIDV4 NOT NULL, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL);
 Executing (default): PRAGMA INDEX_LIST(`CategoryImages`)
 Executing (default): PRAGMA INDEX_INFO(`sqlite_autoindex_CategoryImages_1`)
+Executing (default): DROP TABLE IF EXISTS `Comments`;
 Executing (default): CREATE TABLE IF NOT EXISTS `Comments` (`id` UUIDV4 NOT NULL PRIMARY KEY, `content` VARCHAR(255) NOT NULL, `rating` INTEGER NOT NULL DEFAULT 1, `productId` UUIDV4 NOT NULL, `userId` UUIDV4 NOT NULL, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL);
 Executing (default): PRAGMA INDEX_LIST(`Comments`)
 Executing (default): PRAGMA INDEX_INFO(`sqlite_autoindex_Comments_1`)
+Executing (default): DROP TABLE IF EXISTS `Orders`;
 Executing (default): CREATE TABLE IF NOT EXISTS `Orders` (`id` UUIDV4 NOT NULL PRIMARY KEY, `trackingId` VARCHAR(255) NOT NULL, `orderStatus` VARCHAR(255), `userId` UUIDV4 NOT NULL, `addressId` UUIDV4 NOT NULL REFERENCES `Addresses` (`id`), `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL);
 Executing (default): PRAGMA INDEX_LIST(`Orders`)
 Executing (default): PRAGMA INDEX_INFO(`sqlite_autoindex_Orders_1`)
-Executing (default): PRAGMA INDEX_INFO(`orders_tracking_id_user_id`)
+Executing (default): CREATE INDEX `orders_tracking_id` ON `Orders` (`trackingId`)
+Executing (default): DROP TABLE IF EXISTS `OrderItems`;
 Executing (default): CREATE TABLE IF NOT EXISTS `OrderItems` (`id` UUIDV4 PRIMARY KEY, `name` VARCHAR(60) NOT NULL, `slug` VARCHAR(60) NOT NULL, `price` DECIMAL(10,2) NOT NULL, `quantity` INTEGER NOT NULL, `userId` UUIDV4, `orderId` UUIDV4 NOT NULL, `productId` UUIDV4, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL);
 Executing (default): PRAGMA INDEX_LIST(`OrderItems`)
 Executing (default): PRAGMA INDEX_INFO(`sqlite_autoindex_OrderItems_1`)
-Executing (default): PRAGMA INDEX_INFO(`order_items_user_id_order_id`)
+Executing (default): CREATE INDEX `order_items_user_id_order_id` ON `OrderItems` (`userId`, `orderId`)
+Executing (default): DROP TABLE IF EXISTS `Products`;
 Executing (default): CREATE TABLE IF NOT EXISTS `Products` (`id` UUIDV4 PRIMARY KEY, `name` VARCHAR(50) NOT NULL, `slug` VARCHAR(50) NOT NULL, `description` TEXT NOT NULL, `price` DECIMAL(10,2) NOT NULL, `inStock` INTEGER NOT NULL, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL);
 Executing (default): PRAGMA INDEX_LIST(`Products`)
 Executing (default): PRAGMA INDEX_INFO(`sqlite_autoindex_Products_1`)
-Executing (default): PRAGMA INDEX_INFO(`products_slug`)
+Executing (default): CREATE INDEX `products_slug` ON `Products` (`slug`)
+Executing (default): DROP TABLE IF EXISTS `ProductCategories`;
 Executing (default): CREATE TABLE IF NOT EXISTS `ProductCategories` (`id` UUIDV4 NOT NULL PRIMARY KEY, `productId` UUIDV4 NOT NULL, `categoryId` UUIDV4 NOT NULL, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL);
 Executing (default): PRAGMA INDEX_LIST(`ProductCategories`)
 Executing (default): PRAGMA INDEX_INFO(`sqlite_autoindex_ProductCategories_1`)
+Executing (default): DROP TABLE IF EXISTS `ProductTags`;
 Executing (default): CREATE TABLE IF NOT EXISTS `ProductTags` (`id` UUIDV4 NOT NULL PRIMARY KEY, `productId` UUIDV4, `tagId` UUIDV4, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL);
 Executing (default): PRAGMA INDEX_LIST(`ProductTags`)
 Executing (default): PRAGMA INDEX_INFO(`sqlite_autoindex_ProductTags_1`)
+Executing (default): DROP TABLE IF EXISTS `Tags`;
 Executing (default): CREATE TABLE IF NOT EXISTS `Tags` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `name` VARCHAR(255), `slug` VARCHAR(255) NOT NULL, `desctiption` TEXT, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL);
 Executing (default): PRAGMA INDEX_LIST(`Tags`)
+Executing (default): DROP TABLE IF EXISTS `Users`;
 Executing (default): CREATE TABLE IF NOT EXISTS `Users` (`name` VARCHAR(255) NOT NULL, `id` UUIDV4 NOT NULL PRIMARY KEY, `username` VARCHAR(255) NOT NULL, `email` VARCHAR(255) NOT NULL UNIQUE, `password` VARCHAR(255) NOT NULL, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL);
 Executing (default): PRAGMA INDEX_LIST(`Users`)
 Executing (default): PRAGMA INDEX_INFO(`sqlite_autoindex_Users_1`)
 Executing (default): PRAGMA INDEX_INFO(`sqlite_autoindex_Users_2`)
-Executing (default): SELECT 1+1 AS result
 ## database succesfully connected!!
 server already started on http://localhost:5000
+Executing (default): SELECT `Products`.`id`, `Products`.`name`, `Products`.`slug`, `Products`.`description`, `Products`.`price`, `Products`.`inStock`, `Products`.`createdAt`, `Products`.`updatedAt`, `tags`.`id` AS `tags.id`, `tags`.`name` AS `tags.name`, `tags`.`slug` AS `tags.slug`, `tags`.`desctiption` AS `tags.desctiption`, `tags`.`createdAt` AS `tags.createdAt`, `tags`.`updatedAt` AS `tags.updatedAt`, `tags->ProductTags`.`id` AS `tags.ProductTags.id`, `tags->ProductTags`.`productId` AS `tags.ProductTags.productId`, `tags->ProductTags`.`tagId` AS `tags.ProductTags.tagId`, `tags->ProductTags`.`createdAt` AS `tags.ProductTags.createdAt`, `tags->ProductTags`.`updatedAt` AS `tags.ProductTags.updatedAt`, `tags->ProductTags`.`ProductId` AS `tags.ProductTags.ProductId`, `tags->ProductTags`.`TagId` AS `tags.ProductTags.TagId` FROM `Products` AS `Products` LEFT OUTER JOIN `ProductTags` AS `tags->ProductTags` ON `Products`.`id` = `tags->ProductTags`.`productId` LEFT OUTER JOIN `Tags` AS `tags` ON `tags`.`id` = `tags->ProductTags`.`tagId`;
+[0mGET /api/products [32m200[0m 16.787 ms - 49[0m
+Executing (default): SELECT `Products`.`id`, `Products`.`name`, `Products`.`slug`, `Products`.`description`, `Products`.`price`, `Products`.`inStock`, `Products`.`createdAt`, `Products`.`updatedAt`, `tags`.`id` AS `tags.id`, `tags`.`name` AS `tags.name`, `tags`.`slug` AS `tags.slug`, `tags`.`desctiption` AS `tags.desctiption`, `tags`.`createdAt` AS `tags.createdAt`, `tags`.`updatedAt` AS `tags.updatedAt`, `tags->ProductTags`.`id` AS `tags.ProductTags.id`, `tags->ProductTags`.`productId` AS `tags.ProductTags.productId`, `tags->ProductTags`.`tagId` AS `tags.ProductTags.tagId`, `tags->ProductTags`.`createdAt` AS `tags.ProductTags.createdAt`, `tags->ProductTags`.`updatedAt` AS `tags.ProductTags.updatedAt`, `tags->ProductTags`.`ProductId` AS `tags.ProductTags.ProductId`, `tags->ProductTags`.`TagId` AS `tags.ProductTags.TagId` FROM `Products` AS `Products` LEFT OUTER JOIN `ProductTags` AS `tags->ProductTags` ON `Products`.`id` = `tags->ProductTags`.`productId` LEFT OUTER JOIN `Tags` AS `tags` ON `tags`.`id` = `tags->ProductTags`.`tagId`;
+[0mGET /api/products [36m304[0m 4.474 ms - -[0m
+Executing (default): SELECT `Products`.`id`, `Products`.`name`, `Products`.`slug`, `Products`.`description`, `Products`.`price`, `Products`.`inStock`, `Products`.`createdAt`, `Products`.`updatedAt`, `tags`.`id` AS `tags.id`, `tags`.`name` AS `tags.name`, `tags`.`slug` AS `tags.slug`, `tags`.`desctiption` AS `tags.desctiption`, `tags`.`createdAt` AS `tags.createdAt`, `tags`.`updatedAt` AS `tags.updatedAt`, `tags->ProductTags`.`id` AS `tags.ProductTags.id`, `tags->ProductTags`.`productId` AS `tags.ProductTags.productId`, `tags->ProductTags`.`tagId` AS `tags.ProductTags.tagId`, `tags->ProductTags`.`createdAt` AS `tags.ProductTags.createdAt`, `tags->ProductTags`.`updatedAt` AS `tags.ProductTags.updatedAt`, `tags->ProductTags`.`ProductId` AS `tags.ProductTags.ProductId`, `tags->ProductTags`.`TagId` AS `tags.ProductTags.TagId` FROM `Products` AS `Products` LEFT OUTER JOIN `ProductTags` AS `tags->ProductTags` ON `Products`.`id` = `tags->ProductTags`.`productId` LEFT OUTER JOIN `Tags` AS `tags` ON `tags`.`id` = `tags->ProductTags`.`tagId`;
+[0mGET /api/products [36m304[0m 3.074 ms - -[0m
