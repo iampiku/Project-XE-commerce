@@ -2,7 +2,7 @@
 
 set -e
 
-read -p "enter you working branch name: " branchName
+read -p "enter name of your current working branch: " branchName
 git pull origin $branchName
 git checkout main
 git merge $branchName
