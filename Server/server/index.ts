@@ -13,7 +13,7 @@ export async function serverStart() {
     await serverConfig();
     await connectToDatabase();
     await (async () => {
-      await buildAssociationsBetweenSchemas();
+      buildAssociationsBetweenSchemas();
     })();
 
     app.use("/api", APIController);

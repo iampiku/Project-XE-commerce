@@ -46,6 +46,7 @@ export const Order: ModelCtor<Model<any, any>> = db.define(
     hooks: {
       beforeValidate: function (order: any, options) {
         order.id = uuid();
+        order.trackingId = uuid();
       },
     },
     indexes: [{ fields: ["trackingId"] }],

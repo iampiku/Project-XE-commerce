@@ -6,13 +6,14 @@ const router = Router();
 // [GET] All products listed
 router.get("/", async (req, res, next) => {
   try {
+    const allCategories = await Category.findAll();
     const allProducts = await Product.findAll({
       include: [
         { model: Category, as: "categories" },
         { model: Tag, as: "tags" },
       ],
     });
-    return res.status(OK).send({ allProducts, ...SUCCESS });
+    return res.status(OK).send({ allProducts, allCategories ,...SUCCESS });
   } catch (error) {
     warn(res, INTERNAL_SERVER_ERROR, error);
   }

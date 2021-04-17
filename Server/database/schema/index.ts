@@ -110,6 +110,9 @@ export {
   buildAssociationsBetweenSchemas,
 };
 
-// Product.create({ name: 'Iphone 12 Mini', price: 68792, description: 'New Apple Lineup', inStock: 47 });
+// Product.create({ name: 'Pixel 3A', price: 45454, description: 'New Pixel Lineup', inStock: 20 });
+
+// Category.create({name: 'Electronics', slug: 'electronics', description: 'Collectionsof electronics products'});
+
 
 // Product.findAll().then((r: any) => console.log(r))
