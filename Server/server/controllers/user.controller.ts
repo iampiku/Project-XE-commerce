@@ -9,6 +9,7 @@ router.get("/", async (req, res, next) => {
   try {
     const users = await User.findAll({
       include: [{ model: Address, as: "addresses" }],
+      order: [["createdAt", "DESC"]],
     });
 
     res.status(OK).send({

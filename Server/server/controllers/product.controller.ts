@@ -12,6 +12,7 @@ router.get("/", async (req, res, next) => {
         { model: Category, as: "categories" },
         { model: Tag, as: "tags" },
       ],
+      order: [["createdAt", "DESC"]],
     });
     return res.status(OK).send({ allProducts, ...SUCCESS });
   } catch (error) {
