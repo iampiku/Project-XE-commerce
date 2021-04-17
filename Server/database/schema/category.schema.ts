@@ -9,7 +9,7 @@ export const Category: ModelCtor<Model<any, any>> = db.define(
   "Categories",
   {
     id: { type: UUIDV4, allowNull: false, primaryKey: true },
-    name: { type: STRING(50), allowNull: false },
+    name: { type: STRING(50), allowNull: false, unique: true },
     slug: { type: STRING(50), allowNull: false },
     description: { type: TEXT },
   },

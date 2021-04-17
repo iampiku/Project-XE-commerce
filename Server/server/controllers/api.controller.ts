@@ -1,8 +1,9 @@
 import { Router } from "express";
 import { INTERNAL_SERVER_ERROR, OK } from "../utils";
 import AuthController from "./auth.controller";
-import UserController from "./user.controller";
+import CategoryController from "./category.controller";
 import ProductController from "./product.controller";
+import UserController from "./user.controller";
 
 const router = Router();
 
@@ -25,5 +26,6 @@ router.get("/data", async (req, res, next) => {
 router.use("/users", UserController);
 router.use("/auth", AuthController);
 router.use("/products", ProductController);
+router.use("/categories", CategoryController);
 
 export default router;
