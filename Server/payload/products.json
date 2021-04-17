@@ -1,0 +1,112 @@
+{
+  "allProducts": [
+    {
+      "id": "9e012a16-91e0-470d-ac93-2a5c033e1b6f",
+      "name": "Iphone 12",
+      "slug": "iphone-12",
+      "brand": "Iphone",
+      "description": "New Apple Flagship Line up for A14 Bionic M1 chip",
+      "price": 87999,
+      "inStock": 54,
+      "sellerId": "23880862-483f-4b98-9907-7cfd337558a0",
+      "createdAt": "2021-04-17T17:53:36.338Z",
+      "updatedAt": "2021-04-17T17:53:36.338Z",
+      "Seller": {
+        "id": "23880862-483f-4b98-9907-7cfd337558a0",
+        "name": "Apple",
+        "proprietorName": "Steve jobs",
+        "address": "California, USA",
+        "createdAt": "2021-04-17T17:48:54.518Z",
+        "updatedAt": "2021-04-17T17:48:54.518Z"
+      },
+      "categories": [
+        {
+          "id": "6b3fce7a-4eb9-4130-ae74-5e52b03b78f5",
+          "name": "Electronics",
+          "slug": "electronics",
+          "description": "Collections of electronics products",
+          "createdAt": "2021-04-17T17:49:21.505Z",
+          "updatedAt": "2021-04-17T17:49:21.505Z",
+          "ProductCategories": {
+            "id": "e4085f8d-87f1-4e3e-8e9b-fe84f2238cf9",
+            "productId": "9e012a16-91e0-470d-ac93-2a5c033e1b6f",
+            "categoryId": "6b3fce7a-4eb9-4130-ae74-5e52b03b78f5",
+            "createdAt": "2021-04-17T17:53:36.697Z",
+            "updatedAt": "2021-04-17T17:53:36.697Z"
+          }
+        },
+        {
+          "id": "7746b8f0-790e-4387-946a-3f532fd1a38b",
+          "name": "Mobiles",
+          "slug": "mobiles",
+          "description": "Collections of smartphones of various brands",
+          "createdAt": "2021-04-17T17:49:45.050Z",
+          "updatedAt": "2021-04-17T17:49:45.050Z",
+          "ProductCategories": {
+            "id": "e9338604-c102-4d9d-8395-caf9fb56902e",
+            "productId": "9e012a16-91e0-470d-ac93-2a5c033e1b6f",
+            "categoryId": "7746b8f0-790e-4387-946a-3f532fd1a38b",
+            "createdAt": "2021-04-17T17:53:36.540Z",
+            "updatedAt": "2021-04-17T17:53:36.540Z"
+          }
+        }
+      ],
+      "tags": []
+    },
+    {
+      "id": "96c37c99-23e8-4449-96fd-83db1731b9f3",
+      "name": "Prestidge Sauspance",
+      "slug": "prestidge-sauspance",
+      "brand": "Prestidge",
+      "description": "Flat design sauspance for womens designers",
+      "price": 2499,
+      "inStock": 87,
+      "sellerId": "23880862-483f-4b98-9907-7cfd337558a0",
+      "createdAt": "2021-04-17T17:52:37.361Z",
+      "updatedAt": "2021-04-17T17:52:37.361Z",
+      "Seller": {
+        "id": "23880862-483f-4b98-9907-7cfd337558a0",
+        "name": "Apple",
+        "proprietorName": "Steve jobs",
+        "address": "California, USA",
+        "createdAt": "2021-04-17T17:48:54.518Z",
+        "updatedAt": "2021-04-17T17:48:54.518Z"
+      },
+      "categories": [
+        {
+          "id": "7746b8f0-790e-4387-946a-3f532fd1a38b",
+          "name": "Mobiles",
+          "slug": "mobiles",
+          "description": "Collections of smartphones of various brands",
+          "createdAt": "2021-04-17T17:49:45.050Z",
+          "updatedAt": "2021-04-17T17:49:45.050Z",
+          "ProductCategories": {
+            "id": "e0ff3572-6232-4ed0-b9b9-2f37358967a9",
+            "productId": "96c37c99-23e8-4449-96fd-83db1731b9f3",
+            "categoryId": "7746b8f0-790e-4387-946a-3f532fd1a38b",
+            "createdAt": "2021-04-17T17:52:37.629Z",
+            "updatedAt": "2021-04-17T17:52:37.629Z"
+          }
+        },
+        {
+          "id": "6b3fce7a-4eb9-4130-ae74-5e52b03b78f5",
+          "name": "Electronics",
+          "slug": "electronics",
+          "description": "Collections of electronics products",
+          "createdAt": "2021-04-17T17:49:21.505Z",
+          "updatedAt": "2021-04-17T17:49:21.505Z",
+          "ProductCategories": {
+            "id": "e9e351f4-856b-413b-a633-4ead2f2550dc",
+            "productId": "96c37c99-23e8-4449-96fd-83db1731b9f3",
+            "categoryId": "6b3fce7a-4eb9-4130-ae74-5e52b03b78f5",
+            "createdAt": "2021-04-17T17:52:37.830Z",
+            "updatedAt": "2021-04-17T17:52:37.830Z"
+          }
+        }
+      ],
+      "tags": []
+    }
+  ],
+  "statusCode": 200,
+  "status": true
+}

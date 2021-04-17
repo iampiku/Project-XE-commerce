@@ -1,0 +1,33 @@
+{
+  "statusCode": 200,
+  "status": true,
+  "allCategories": [
+    {
+      "id": "6d032a7d-35b4-4366-a72e-63e954439ca9",
+      "name": "Kitchen",
+      "slug": "kitchen",
+      "description": "Collections of beatiful designer kitchen appliances",
+      "createdAt": "2021-04-17T17:50:07.421Z",
+      "updatedAt": "2021-04-17T17:50:07.421Z",
+      "products": []
+    },
+    {
+      "id": "7746b8f0-790e-4387-946a-3f532fd1a38b",
+      "name": "Mobiles",
+      "slug": "mobiles",
+      "description": "Collections of smartphones of various brands",
+      "createdAt": "2021-04-17T17:49:45.050Z",
+      "updatedAt": "2021-04-17T17:49:45.050Z",
+      "products": []
+    },
+    {
+      "id": "6b3fce7a-4eb9-4130-ae74-5e52b03b78f5",
+      "name": "Electronics",
+      "slug": "electronics",
+      "description": "Collections of electronics products",
+      "createdAt": "2021-04-17T17:49:21.505Z",
+      "updatedAt": "2021-04-17T17:49:21.505Z",
+      "products": []
+    }
+  ]
+}

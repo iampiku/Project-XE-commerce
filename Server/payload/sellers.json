@@ -1,0 +1,42 @@
+{
+  "statusCode": 200,
+  "status": true,
+  "allSellers": [
+    {
+      "id": "23880862-483f-4b98-9907-7cfd337558a0",
+      "name": "Apple",
+      "proprietorName": "Steve jobs",
+      "address": "California, USA",
+      "createdAt": "2021-04-17T17:48:54.518Z",
+      "updatedAt": "2021-04-17T17:48:54.518Z",
+      "products": [
+        {
+          "id": "96c37c99-23e8-4449-96fd-83db1731b9f3",
+          "name": "Prestidge Sauspance",
+          "slug": "prestidge-sauspance",
+          "brand": "Prestidge",
+          "description": "Flat design sauspance for womens designers",
+          "price": 2499,
+          "inStock": 87,
+          "sellerId": "23880862-483f-4b98-9907-7cfd337558a0",
+          "createdAt": "2021-04-17T17:52:37.361Z",
+          "updatedAt": "2021-04-17T17:52:37.361Z",
+          "SellerId": "23880862-483f-4b98-9907-7cfd337558a0"
+        },
+        {
+          "id": "9e012a16-91e0-470d-ac93-2a5c033e1b6f",
+          "name": "Iphone 12",
+          "slug": "iphone-12",
+          "brand": "Iphone",
+          "description": "New Apple Flagship Line up for A14 Bionic M1 chip",
+          "price": 87999,
+          "inStock": 54,
+          "sellerId": "23880862-483f-4b98-9907-7cfd337558a0",
+          "createdAt": "2021-04-17T17:53:36.338Z",
+          "updatedAt": "2021-04-17T17:53:36.338Z",
+          "SellerId": "23880862-483f-4b98-9907-7cfd337558a0"
+        }
+      ]
+    }
+  ]
+}

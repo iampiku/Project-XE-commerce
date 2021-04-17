@@ -1,0 +1,26 @@
+{
+  "statusCode": 200,
+  "status": true,
+  "users": [
+    {
+      "name": "Manish Mallik",
+      "id": "50d5ce9c-1207-418d-9e64-91add8f62c2a",
+      "username": "manishaMallik",
+      "email": "b@b.com",
+      "password": "$2b$10$uNPJpGUJSSPQ1atwD9z1wO8uwYMqArozMazj1OlfkBsWSUJtzTl.G",
+      "createdAt": "2021-04-17T17:47:59.188Z",
+      "updatedAt": "2021-04-17T17:47:59.188Z",
+      "addresses": []
+    },
+    {
+      "name": "Sounish Nath",
+      "id": "5d14d873-db71-4b73-9510-251a4dbfb470",
+      "username": "sounishnath003",
+      "email": "a@a.com",
+      "password": "$2b$10$xvrL3XMKIBQpSKeGKrNaKebmtMGsjgGZBpVsUDPk3WUGCaHSJZdRy",
+      "createdAt": "2021-04-17T17:47:32.569Z",
+      "updatedAt": "2021-04-17T17:47:32.569Z",
+      "addresses": []
+    }
+  ]
+}
