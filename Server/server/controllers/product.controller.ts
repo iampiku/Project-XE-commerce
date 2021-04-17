@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { Category, Product, ProductCategory, Tag } from "../../database/schema";
+import { Seller } from "../../database/schema/seller.schema";
 import { INTERNAL_SERVER_ERROR, OK, SUCCESS, warn } from "../utils";
 
 const router = Router();
@@ -9,6 +10,7 @@ router.get("/", async (req, res, next) => {
   try {
     const allProducts = await Product.findAll({
       include: [
+        { model: Seller },
         { model: Category, as: "categories" },
         { model: Tag, as: "tags" },
       ],

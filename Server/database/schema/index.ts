@@ -7,6 +7,7 @@ import { OrderItem } from "./orderItem.schema";
 import { Product } from "./product.schema";
 import { ProductCategory } from "./productCategory.schema";
 import { ProductTag } from "./productTag.schema";
+import { Seller } from "./seller.schema";
 import { Tag } from "./tag.schema";
 import { User } from "./user.schema";
 
@@ -42,6 +43,8 @@ async function buildAssociationsBetweenSchemas() {
    *
    * ProductTag.belongsTo(Product);
    * ProductTag.belongsTo(Tag);
+   *
+   * Product.belongsToMany(Seller, { through: ProductSeller, as: 'sellers', foreignKey: `productId`, otherKey: `sellerId`    });
    *
    * Tag.belongsToMany(Product, {through: ProductTag, as: 'products', foreignKey: 'tagId', otherKey: 'productId'});
    */
@@ -84,6 +87,13 @@ async function buildAssociationsBetweenSchemas() {
     otherKey: `tagId`,
   });
 
+  Product.belongsTo(Seller);
+
+  Seller.hasMany(Product, {
+    as: "products",
+    foreignKey: `sellerId`,
+  });
+
   ProductTag.belongsTo(Product);
   ProductTag.belongsTo(Tag);
 
@@ -113,7 +123,6 @@ export {
 // Product.create({ name: 'Pixel 3A2', price: 45454, description: 'New Pixel Lineup', inStock: 20, categoryId: '3ac48ed6-7c00-444c-978d-e76facb9bb6c' });
 
 // Category.create({name: 'Electronics', slug: 'electronics', description: 'Collectionsof electronics products', productId: []});
-
 
 // Product.findAll().then((r: any) => console.log(r))
 // 63b8c34b-4fa0-43d0-8c56-53066076085a, ab1f659b-1ab8-44d6-90e1-b3f2c4024796
