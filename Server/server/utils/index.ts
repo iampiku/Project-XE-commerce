@@ -1,3 +1,4 @@
+import { compare } from "bcrypt";
 import { sign, verify } from "jsonwebtoken";
 import { v4 } from "uuid";
 import { User } from "../../database/schema";
@@ -19,6 +20,14 @@ export const TO_MANY_REQUESTS = 429;
 export const INTERNAL_SERVER_ERROR = 500;
 export const BAD_GATEWAY = 502;
 export const SERVICE_UNAVAILBLE = 503;
+
+/** Check For Password Matches with HashedPassword */
+export async function compareWithHashifiedPassword(
+  password: string,
+  checkIfUserNameExists: any
+): Promise<boolean> {
+  return (await compare(password, checkIfUserNameExists.password)) as boolean;
+}
 
 /** Typed {Req, Res} from Express Middle */
 export type Request = Express.Request;

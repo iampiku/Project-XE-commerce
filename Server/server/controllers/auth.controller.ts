@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { User } from "../../database/schema";
 import {
+  compareWithHashifiedPassword,
   FORBIDDEN,
   generateAuthToken,
   OK,
@@ -48,16 +49,27 @@ router.post("/login", async (req, res, next) => {
     }
 
     // check in database if DataFragment Found
-    const resp: any = await User.findOne({ where: { username, password } });
+    const checkIfUserNameExists: any = await User.findOne({
+      where: { username },
+    });
 
-    if (resp === null) {
-      throw new Error("Credentials Not matched");
+    if (checkIfUserNameExists === null) {
+      warn(res, FORBIDDEN, "username does not exists");
     }
 
-    const token = generateAuthToken(resp);
+    const passwordMatch = await compareWithHashifiedPassword(
+      password,
+      checkIfUserNameExists
+    );
 
-    setAuthorizationHeader(res, token);
-    return res.status(OK).send({ token, ...SUCCESS, loggedIn: true });
+    if (passwordMatch) {
+      const payload = { ...checkIfUserNameExists, password };
+      const token = generateAuthToken(payload);
+      setAuthorizationHeader(res, token);
+      return res.status(OK).send({ token, ...SUCCESS, loggedIn: true });
+    } else {
+      warn(res, FORBIDDEN, "password does not matching!");
+    }
   } catch (error) {
     warn(res, FORBIDDEN, "Credentials are not matching!");
   }
