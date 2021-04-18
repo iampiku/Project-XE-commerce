@@ -23,7 +23,11 @@ export const Product: S.ModelCtor<S.Model<any, any>> = db.define(
   {
     freezeTableName: true,
     tableName: "Products",
-    indexes: [{ fields: ["slug"] }, { fields: ["brand"] }],
+    indexes: [
+      { fields: ["slug"] },
+      { fields: ["brand"] },
+      { fields: ["name"] },
+    ],
     hooks: {
       beforeValidate: function (product: any, options) {
         product.slug = slugify(product.name, { lower: true });

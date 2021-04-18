@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { Op } from "sequelize";
 import {
   Category,
   Product,
@@ -22,7 +23,9 @@ router.get("/", async (req, res, next) => {
       ],
       order: [["createdAt", "DESC"]],
     });
-    return res.status(OK).send({ allProducts, ...SUCCESS });
+    return res
+      .status(OK)
+      .send({ allProducts, ...SUCCESS, found: allProducts.length });
   } catch (error) {
     warn(res, INTERNAL_SERVER_ERROR, error);
   }
@@ -48,6 +51,75 @@ router.post("/create", async (req, res, next) => {
     return res
       .status(OK)
       .send({ ...SUCCESS, resp, message: `product has been created!` });
+  } catch (error) {
+    warn(res, INTERNAL_SERVER_ERROR, error);
+  }
+  next();
+});
+
+// [GET] Search Product By Id/slug : api/products/search?id=8a0216c9-f0d5-4e1e-8e52-89a76caa0848
+router.get("/search", async (req, res, next) => {
+  try {
+    const searchParams: any = req.query;
+    /** Find by Id */
+    if (searchParams.id) {
+      const product = await Product.findByPk(searchParams.id, {
+        include: [
+          { model: Seller },
+          { model: Category, as: "categories" },
+          { model: Tag, as: "tags" },
+        ],
+      });
+      if (product === null)
+        warn(
+          res,
+          INTERNAL_SERVER_ERROR,
+          `product ${searchParams.id} could not be found!`
+        );
+      return res.status(OK).send({ ...SUCCESS, product });
+    }
+    /** Find By Slug */
+    if (searchParams.slug) {
+      const products = await Product.findAll({
+        where: { slug: { [Op.like]: `%${searchParams.slug}%` } },
+        include: [
+          { model: Seller },
+          { model: Category, as: "categories" },
+          { model: Tag, as: "tags" },
+        ],
+      });
+      if (products === null)
+        warn(
+          res,
+          INTERNAL_SERVER_ERROR,
+          `${searchParams.slug} could not be found!`
+        );
+      return res
+        .status(OK)
+        .send({ ...SUCCESS, products, found: products.length });
+    }
+    /** Full Text Based Search */
+    if (searchParams.name) {
+      const products = await Product.findAll({
+        where: { name: { [Op.like]: `%${searchParams.name}%` } },
+        include: [
+          { model: Seller },
+          { model: Category, as: "categories" },
+          { model: Tag, as: "tags" },
+        ],
+      });
+      if (products === null)
+        warn(
+          res,
+          INTERNAL_SERVER_ERROR,
+          `${searchParams.name} could not be found!`
+        );
+      return res
+        .status(OK)
+        .send({ ...SUCCESS, products, found: products.length });
+    }
+
+    return res.status(OK).send({ ...SUCCESS, searchParams });
   } catch (error) {
     warn(res, INTERNAL_SERVER_ERROR, error);
   }
