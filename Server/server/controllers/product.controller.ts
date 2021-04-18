@@ -5,7 +5,7 @@ import {
   Product,
   ProductCategory,
   ProductTag,
-  Tag,
+  Tag
 } from "../../database/schema";
 import { Seller } from "../../database/schema/seller.schema";
 import { INTERNAL_SERVER_ERROR, OK, SUCCESS, warn } from "../utils";
@@ -58,6 +58,7 @@ router.post("/create", async (req, res, next) => {
 });
 
 // [GET] Search Product By Id/slug : api/products/search?id=8a0216c9-f0d5-4e1e-8e52-89a76caa0848
+// [GET] Full Text Based searching functionlity added
 router.get("/search", async (req, res, next) => {
   try {
     const searchParams: any = req.query;
