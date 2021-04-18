@@ -1,5 +1,11 @@
 import { Router } from "express";
-import { Category, Product, ProductCategory, Tag } from "../../database/schema";
+import {
+  Category,
+  Product,
+  ProductCategory,
+  ProductTag,
+  Tag,
+} from "../../database/schema";
 import { Seller } from "../../database/schema/seller.schema";
 import { INTERNAL_SERVER_ERROR, OK, SUCCESS, warn } from "../utils";
 
@@ -27,9 +33,17 @@ router.post("/create", async (req, res, next) => {
   try {
     const payload = req.body;
     const resp = await Product.create(payload);
-    for (const categoryId of payload.categoryIds) {
-      const pc = { productId: resp.getDataValue("id"), categoryId };
-      await ProductCategory.create(pc);
+    if (payload.categoryIds) {
+      for (const categoryId of payload.categoryIds) {
+        const pc = { productId: resp.getDataValue("id"), categoryId };
+        await ProductCategory.create(pc);
+      }
+    }
+    if (payload.tagIds) {
+      for (const tagId of payload.tagIds) {
+        const tc = { productId: resp.getDataValue("id"), tagId };
+        await ProductTag.create(tc);
+      }
     }
     return res
       .status(OK)

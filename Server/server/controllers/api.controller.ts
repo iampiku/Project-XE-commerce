@@ -4,6 +4,7 @@ import AuthController from "./auth.controller";
 import CategoryController from "./category.controller";
 import ProductController from "./product.controller";
 import SellerController from "./seller.controller";
+import TagController from "./tags.controller";
 import UserController from "./user.controller";
 
 const router = Router();
@@ -28,6 +29,7 @@ router.use("/users", UserController);
 router.use("/auth", AuthController);
 router.use("/products", ProductController);
 router.use("/categories", CategoryController);
-router.use('/sellers', SellerController);
+router.use("/sellers", SellerController);
+router.use("/tags", TagController);
 
 export default router;
