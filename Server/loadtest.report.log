@@ -1,0 +1,29 @@
+[Mon Apr 19 2021 22:08:19 GMT+0530 (India Standard Time)] INFO Requests: 0 (0%), requests per second: 0, mean latency: 0 ms
+[Mon Apr 19 2021 22:08:24 GMT+0530 (India Standard Time)] INFO Requests: 800 (8%), requests per second: 161, mean latency: 576.4 ms
+[Mon Apr 19 2021 22:08:29 GMT+0530 (India Standard Time)] INFO Requests: 1700 (17%), requests per second: 180, mean latency: 564.6 ms
+[Mon Apr 19 2021 22:08:34 GMT+0530 (India Standard Time)] INFO Requests: 2674 (27%), requests per second: 195, mean latency: 524.9 ms
+[Mon Apr 19 2021 22:08:39 GMT+0530 (India Standard Time)] INFO Requests: 3800 (38%), requests per second: 225, mean latency: 440.3 ms
+[Mon Apr 19 2021 22:08:44 GMT+0530 (India Standard Time)] INFO Requests: 5224 (52%), requests per second: 285, mean latency: 353.1 ms
+[Mon Apr 19 2021 22:08:49 GMT+0530 (India Standard Time)] INFO Requests: 6577 (66%), requests per second: 271, mean latency: 370.3 ms
+[Mon Apr 19 2021 22:08:54 GMT+0530 (India Standard Time)] INFO Requests: 7600 (76%), requests per second: 205, mean latency: 479.9 ms
+[Mon Apr 19 2021 22:08:59 GMT+0530 (India Standard Time)] INFO Requests: 8654 (87%), requests per second: 211, mean latency: 480.9 ms
+[Mon Apr 19 2021 22:09:04 GMT+0530 (India Standard Time)] INFO Requests: 9722 (97%), requests per second: 214, mean latency: 463.3 ms
+[Mon Apr 19 2021 22:09:05 GMT+0530 (India Standard Time)] INFO 
+[Mon Apr 19 2021 22:09:05 GMT+0530 (India Standard Time)] INFO Target URL:          http://localhost:5000/api/users
+[Mon Apr 19 2021 22:09:05 GMT+0530 (India Standard Time)] INFO Max requests:        10000
+[Mon Apr 19 2021 22:09:05 GMT+0530 (India Standard Time)] INFO Concurrency level:   100
+[Mon Apr 19 2021 22:09:05 GMT+0530 (India Standard Time)] INFO Agent:               keepalive
+[Mon Apr 19 2021 22:09:05 GMT+0530 (India Standard Time)] INFO 
+[Mon Apr 19 2021 22:09:05 GMT+0530 (India Standard Time)] INFO Completed requests:  10000
+[Mon Apr 19 2021 22:09:05 GMT+0530 (India Standard Time)] INFO Total errors:        0
+[Mon Apr 19 2021 22:09:05 GMT+0530 (India Standard Time)] INFO Total time:          46.204414809 s
+[Mon Apr 19 2021 22:09:05 GMT+0530 (India Standard Time)] INFO Requests per second: 216
+[Mon Apr 19 2021 22:09:05 GMT+0530 (India Standard Time)] INFO Mean latency:        460.5 ms
+[Mon Apr 19 2021 22:09:05 GMT+0530 (India Standard Time)] INFO 
+[Mon Apr 19 2021 22:09:05 GMT+0530 (India Standard Time)] INFO Percentage of the requests served within a certain time
+[Mon Apr 19 2021 22:09:05 GMT+0530 (India Standard Time)] INFO   50%      461 ms
+[Mon Apr 19 2021 22:09:05 GMT+0530 (India Standard Time)] INFO   90%      568 ms
+[Mon Apr 19 2021 22:09:05 GMT+0530 (India Standard Time)] INFO   95%      646 ms
+[Mon Apr 19 2021 22:09:05 GMT+0530 (India Standard Time)] INFO   99%      747 ms
+[Mon Apr 19 2021 22:09:05 GMT+0530 (India Standard Time)] INFO  100%      914 ms (longest request)
+Done in 46.44s.
