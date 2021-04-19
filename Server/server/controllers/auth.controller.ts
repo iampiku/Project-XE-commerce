@@ -66,7 +66,7 @@ router.post("/login", async (req, res, next) => {
       const payload = { ...checkIfUserNameExists };
       const token: string = generateAuthToken(payload);
       setAuthorizationHeader(res, token);
-      return res.status(OK).send({ token, ...SUCCESS, isLoggedIn: true });
+      return res.status(OK).send({ token, ...SUCCESS, isLoggedIn: true, userId: checkIfUserNameExists.id });
     } else {
       warn(res, FORBIDDEN, "password does not matching!");
     }
