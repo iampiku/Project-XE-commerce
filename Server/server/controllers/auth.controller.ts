@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { Order, User } from "../../database/schema";
+import { Address, Order, User } from "../../database/schema";
 import {
   compareWithHashifiedPassword,
   FORBIDDEN,
@@ -15,7 +15,7 @@ import {
 
 const router = Router();
 
-// [POST] Create User
+// [POST] Create User Account
 router.post("/signup", async (req, res, next) => {
   try {
     const { name, email, password, username } = req.body as SignupInterface;
@@ -33,7 +33,12 @@ router.post("/signup", async (req, res, next) => {
 
     setAuthorizationHeader(res, token);
 
-    return res.status(OK).send({ token, ...SUCCESS });
+    return res.status(OK).send({
+      token,
+      ...SUCCESS,
+      userId: resp.id,
+      message: `user account has been created!`,
+    });
   } catch (error) {
     warn(res, FORBIDDEN, error);
   }
@@ -66,7 +71,12 @@ router.post("/login", async (req, res, next) => {
       const payload = { ...checkIfUserNameExists };
       const token: string = generateAuthToken(payload);
       setAuthorizationHeader(res, token);
-      return res.status(OK).send({ token, ...SUCCESS, isLoggedIn: true, userId: checkIfUserNameExists.id });
+      return res.status(OK).send({
+        token,
+        ...SUCCESS,
+        isLoggedIn: true,
+        userId: checkIfUserNameExists.id,
+      });
     } else {
       warn(res, FORBIDDEN, "password does not matching!");
     }
@@ -113,11 +123,27 @@ router.post("/user/:id/orders/all", requiresAuth, async (req, res, next) => {
     /** Getting all the orders from OrderSchema for UserId = `id` */
     const allOrders = await Order.findAll({
       where: { userId: id },
+      include: [{ model: Address }],
       group: ["createdAt"],
     });
+
+    console.log({ allOrders });
+
     return res.status(OK).send({ ...SUCCESS, allOrders, userId: id });
   } catch (error) {
-    warn(res, FORBIDDEN, "You are not Authorized");
+    warn(res, FORBIDDEN, error || "You are not authorized");
+  }
+  next();
+});
+
+router.post("/user/address/create", requiresAuth, async (req, res, next) => {
+  try {
+    const resp = await Address.create(req.body);
+    return res
+      .status(OK)
+      .send({ ...SUCCESS, resp, message: `address has been created!` });
+  } catch (error) {
+    warn(res, FORBIDDEN, error || "You are not authorized");
   }
   next();
 });

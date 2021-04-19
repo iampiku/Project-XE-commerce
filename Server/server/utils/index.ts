@@ -73,6 +73,12 @@ export function generateAuthToken(resp: any) {
 /** Authorization Check MiddleWare - True/False */
 export const requiresAuth = (req: any, res: any, next: any) => {
   try {
+    /** If no `authorization` header present
+     * then return Error(Unauthorized) */
+    if (!req.headers["authorization"]) {
+      return next(warn(res, FORBIDDEN, "You are not authorized"));
+    }
+    /** Else Continue for check */
     const token = req.headers["authorization"].split(" ")[1] as string;
 
     if (!token) {
@@ -84,7 +90,7 @@ export const requiresAuth = (req: any, res: any, next: any) => {
     return User.findOne({ where: { id: verified.id } }).then((userPresent) => {
       if (userPresent) return next();
       else {
-        next(warn(res, FORBIDDEN, "User credentials does not found!"));
+        return next(warn(res, FORBIDDEN, "User credentials does not found!"));
       }
     });
   } catch (error) {
