@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { User } from "../../database/schema";
+import { Order, User } from "../../database/schema";
 import {
   compareWithHashifiedPassword,
   FORBIDDEN,
@@ -45,7 +45,7 @@ router.post("/login", async (req, res, next) => {
   try {
     const { username, password } = req.body;
     if (username === "" || password === "") {
-      throw new Error(`fields are not formatted correctly`);
+      warn(res, FORBIDDEN, `fields are not formatted correctly`);
     }
 
     // check in database if DataFragment Found
@@ -63,10 +63,10 @@ router.post("/login", async (req, res, next) => {
     );
 
     if (passwordMatch) {
-      const payload = { ...checkIfUserNameExists, password };
-      const token = generateAuthToken(payload);
+      const payload = { ...checkIfUserNameExists };
+      const token: string = generateAuthToken(payload);
       setAuthorizationHeader(res, token);
-      return res.status(OK).send({ token, ...SUCCESS, loggedIn: true });
+      return res.status(OK).send({ token, ...SUCCESS, isLoggedIn: true });
     } else {
       warn(res, FORBIDDEN, "password does not matching!");
     }
@@ -100,6 +100,22 @@ router.post("/reset-password", async (req, res, next) => {
 router.post("/logout", requiresAuth, async (req, res, next) => {
   try {
     return res.status(OK).send({ isLoggedIn: false, ...SUCCESS });
+  } catch (error) {
+    warn(res, FORBIDDEN, "You are not Authorized");
+  }
+  next();
+});
+
+// [POST] Getting all orders for the user
+router.post("/user/:id/orders/all", requiresAuth, async (req, res, next) => {
+  try {
+    const { id } = req.params as { id: string };
+    /** Getting all the orders from OrderSchema for UserId = `id` */
+    const allOrders = await Order.findAll({
+      where: { userId: id },
+      group: ["createdAt"],
+    });
+    return res.status(OK).send({ ...SUCCESS, allOrders, userId: id });
   } catch (error) {
     warn(res, FORBIDDEN, "You are not Authorized");
   }

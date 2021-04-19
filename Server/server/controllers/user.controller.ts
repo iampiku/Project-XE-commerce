@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { Address, User } from "../../database/schema";
+import { Address, Order, User } from "../../database/schema";
 import { INTERNAL_SERVER_ERROR, OK, SUCCESS, warn } from "../utils";
 
 const router = Router();
@@ -8,9 +8,7 @@ const router = Router();
 router.get("/", async (req, res, next) => {
   try {
     const users = await User.findAll({
-      include: [
-        { model: Address, as: "addresses" },
-      ],
+      include: [{ model: Address, as: "addresses" }, { model: Order }],
       order: [["createdAt", "DESC"]],
     });
 

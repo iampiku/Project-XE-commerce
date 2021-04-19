@@ -62,9 +62,9 @@ type TokenInterface = {
 export function generateAuthToken(resp: any) {
   return sign(
     {
-      id: resp.id,
-      username: resp.username,
-      email: resp.email,
+      id: resp.dataValues.id,
+      username: resp.dataValues.username,
+      email: resp.dataValues.email,
     } as TokenInterface,
     SECRET
   );
@@ -73,24 +73,23 @@ export function generateAuthToken(resp: any) {
 /** Authorization Check MiddleWare - True/False */
 export const requiresAuth = (req: any, res: any, next: any) => {
   try {
-    const token = req.headers["authorization"] as string;
+    const token = req.headers["authorization"].split(" ")[1] as string;
 
     if (!token) {
-      throw new Error("You are not authorized");
+      return next(warn(res, FORBIDDEN, "You are not authorized"));
     }
     const verified: TokenInterface = verify(token, SECRET) as TokenInterface;
     console.log({ verified });
 
-    User.findOne({ where: { id: verified.id } }).then((userPresent) => {
+    return User.findOne({ where: { id: verified.id } }).then((userPresent) => {
       if (userPresent) return next();
       else {
-        warn(res, FORBIDDEN, "User credentials does not found!");
+        next(warn(res, FORBIDDEN, "User credentials does not found!"));
       }
     });
   } catch (error) {
-    warn(res, FORBIDDEN, "You are not authorized");
+    return next(error);
   }
-  next();
 };
 
 /** Set Authorization Header */
