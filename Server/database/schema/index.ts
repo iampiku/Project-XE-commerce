@@ -68,7 +68,7 @@ async function buildAssociationsBetweenSchemas() {
 
   Order.hasMany(OrderItem);
   Order.belongsTo(User, { foreignKey: `userId` });
-  Order.belongsTo(Address, { foreignKey: `addressId` });
+  Order.belongsTo(Address , { foreignKey: `addressId` });
 
   OrderItem.belongsTo(Order);
   OrderItem.belongsTo(Product);

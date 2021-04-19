@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { Address, Order, User } from "../../database/schema";
+import { Address, Order, OrderItem, User } from "../../database/schema";
 import {
   compareWithHashifiedPassword,
   FORBIDDEN,
@@ -123,12 +123,8 @@ router.post("/user/:id/orders/all", requiresAuth, async (req, res, next) => {
     /** Getting all the orders from OrderSchema for UserId = `id` */
     const allOrders = await Order.findAll({
       where: { userId: id },
-      include: [{ model: Address }],
       group: ["createdAt"],
     });
-
-    console.log({ allOrders });
-
     return res.status(OK).send({ ...SUCCESS, allOrders, userId: id });
   } catch (error) {
     warn(res, FORBIDDEN, error || "You are not authorized");
@@ -136,6 +132,18 @@ router.post("/user/:id/orders/all", requiresAuth, async (req, res, next) => {
   next();
 });
 
+router.post("/user/:id/orders/create", requiresAuth, async (req, res, next) => {
+  try {
+    const { id } = req.params as { id: string };
+    const payload = req.body;
+    return res.status(OK).send({ ...SUCCESS, payload, id });
+  } catch (error) {
+    warn(res, FORBIDDEN, error || "You are not authorized");
+  }
+  next();
+});
+
+// [Post] To Create several address for user which userId (requiresAuth.middleware)
 router.post("/user/address/create", requiresAuth, async (req, res, next) => {
   try {
     const resp = await Address.create(req.body);

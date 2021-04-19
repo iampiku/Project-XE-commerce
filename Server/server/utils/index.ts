@@ -81,6 +81,8 @@ export const requiresAuth = (req: any, res: any, next: any) => {
     /** Else Continue for check */
     const token = req.headers["authorization"].split(" ")[1] as string;
 
+    setAuthorizationHeader(res, token);
+
     if (!token) {
       return next(warn(res, FORBIDDEN, "You are not authorized"));
     }
