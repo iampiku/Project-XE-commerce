@@ -1,3 +1,3 @@
-import { serverStart } from "../server";
+import { serverStartt } from "../server";
 
-serverStart();
+serverStartt();
