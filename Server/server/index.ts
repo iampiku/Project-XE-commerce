@@ -26,16 +26,16 @@ export function kickStartTheServer() {
    * I think it is not required for now!!
    */
 
-  // if (isMaster) {
-  //   console.log(`## 🔼 Master Server: ${pid} has been started...`);
-  //   for (const cpu of cpus()) {
-  //     fork();
-  //   }
-  // } else {
-  //   internalServerStart();
-  // }
+  if (isMaster) {
+    console.log(`## 🔼 Master Server: ${pid} has been started...`);
+    for (const cpu of cpus()) {
+      fork();
+    }
+  } else {
+    internalServerStart();
+  }
 
-  internalServerStart();
+  // internalServerStart();
 }
 
 async function internalServerStart() {

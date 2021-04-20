@@ -1,6 +1,12 @@
 import { Router } from "express";
 import { Model } from "sequelize";
-import { Address, Order, OrderItem, Product } from "../../database/schema";
+import {
+  Address,
+  Order,
+  OrderItem,
+  Product,
+  User,
+} from "../../database/schema";
 import {
   FORBIDDEN,
   INTERNAL_SERVER_ERROR,
@@ -19,7 +25,7 @@ router.get("/", async (req, res, next) => {
   // await Order.destroy({truncate: true });
   try {
     const orders = await Order.findAll({
-      include: [{ model: OrderItem }, { model: Address }],
+      include: [{ model: OrderItem }, { model: Address }, { model: User }],
       order: [["createdAt", "DESC"]],
     });
     return res.status(OK).send({ ...SUCCESS, orders });

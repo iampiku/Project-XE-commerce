@@ -3,6 +3,53 @@
   "status": true,
   "orders": [
     {
+      "id": "d0312851-6076-43bc-a1cb-69d006700081",
+      "trackingId": "02a77a05-04bf-4085-b896-83281d59174e",
+      "orderStatus": "PROCESSED",
+      "subtotal": 248997,
+      "userId": "3be52fca-dd03-45eb-812e-a716a3421376",
+      "addressId": "c10f8936-5cac-42f4-a0d0-c3c6054dc87b",
+      "createdAt": "2021-04-20T19:14:50.653Z",
+      "updatedAt": "2021-04-20T19:14:51.412Z",
+      "OrderItems": [
+        {
+          "id": "10668686-ef38-4b77-9a7b-22600c5b1e88",
+          "name": "Iphone 12 Mini",
+          "slug": "iphone-12-mini",
+          "price": 82999,
+          "quantity": 3,
+          "userId": "3be52fca-dd03-45eb-812e-a716a3421376",
+          "orderId": "d0312851-6076-43bc-a1cb-69d006700081",
+          "productId": "4ffe20db-0f72-494b-bc25-a797de76db87",
+          "createdAt": "2021-04-20T19:14:50.881Z",
+          "updatedAt": "2021-04-20T19:14:50.881Z",
+          "OrderId": "d0312851-6076-43bc-a1cb-69d006700081",
+          "ProductId": "4ffe20db-0f72-494b-bc25-a797de76db87"
+        }
+      ],
+      "Address": {
+        "id": "c10f8936-5cac-42f4-a0d0-c3c6054dc87b",
+        "city": "Kolkata",
+        "type": "Home",
+        "address": "13/AE Laketown Clock Tower",
+        "country": "India",
+        "zipCode": "700245",
+        "userId": "3be52fca-dd03-45eb-812e-a716a3421376",
+        "createdAt": "2021-04-20T19:05:53.889Z",
+        "updatedAt": "2021-04-20T19:05:53.889Z",
+        "UserId": "3be52fca-dd03-45eb-812e-a716a3421376"
+      },
+      "User": {
+        "name": "Satabdi Roy",
+        "id": "3be52fca-dd03-45eb-812e-a716a3421376",
+        "username": "satadbi8336",
+        "email": "b@b.com",
+        "password": "$2b$10$bCV/tjuZrEwukBnn3Q5CFevYVLx8Ba3nqDHOB0Hy6f3Zp9RVKtaAW",
+        "createdAt": "2021-04-20T19:02:28.037Z",
+        "updatedAt": "2021-04-20T19:02:28.037Z"
+      }
+    },
+    {
       "id": "052ea0ec-27d9-475b-9916-4940991b24e3",
       "trackingId": "7a047624-2114-4f85-b28d-9e38473a0e4f",
       "orderStatus": "PROCESSED",
@@ -38,6 +85,15 @@
         "createdAt": "2021-04-20T19:05:53.889Z",
         "updatedAt": "2021-04-20T19:05:53.889Z",
         "UserId": "3be52fca-dd03-45eb-812e-a716a3421376"
+      },
+      "User": {
+        "name": "Satabdi Roy",
+        "id": "3be52fca-dd03-45eb-812e-a716a3421376",
+        "username": "satadbi8336",
+        "email": "b@b.com",
+        "password": "$2b$10$bCV/tjuZrEwukBnn3Q5CFevYVLx8Ba3nqDHOB0Hy6f3Zp9RVKtaAW",
+        "createdAt": "2021-04-20T19:02:28.037Z",
+        "updatedAt": "2021-04-20T19:02:28.037Z"
       }
     },
     {
@@ -90,6 +146,15 @@
         "createdAt": "2021-04-20T18:43:57.906Z",
         "updatedAt": "2021-04-20T18:43:57.906Z",
         "UserId": "c409921c-9d02-48d3-adc2-be0e8a9283f1"
+      },
+      "User": {
+        "name": "Sounish Nath",
+        "id": "c409921c-9d02-48d3-adc2-be0e8a9283f1",
+        "username": "sounishnath003",
+        "email": "a@a.com",
+        "password": "$2b$10$7Dr110O338ZsCGGdGIKacO.ii565.TkmK9I91ueeu2H.qlzrq3c92",
+        "createdAt": "2021-04-20T18:43:05.948Z",
+        "updatedAt": "2021-04-20T18:43:05.948Z"
       }
     },
     {
@@ -142,6 +207,15 @@
         "createdAt": "2021-04-20T18:44:33.204Z",
         "updatedAt": "2021-04-20T18:44:33.204Z",
         "UserId": "c409921c-9d02-48d3-adc2-be0e8a9283f1"
+      },
+      "User": {
+        "name": "Sounish Nath",
+        "id": "c409921c-9d02-48d3-adc2-be0e8a9283f1",
+        "username": "sounishnath003",
+        "email": "a@a.com",
+        "password": "$2b$10$7Dr110O338ZsCGGdGIKacO.ii565.TkmK9I91ueeu2H.qlzrq3c92",
+        "createdAt": "2021-04-20T18:43:05.948Z",
+        "updatedAt": "2021-04-20T18:43:05.948Z"
       }
     }
   ]
