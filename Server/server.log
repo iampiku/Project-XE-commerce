@@ -1,0 +1,110 @@
+yarn run v1.22.10
+$ nodemon --exec ts-node ./src/index.ts
+[33m[nodemon] 2.0.7[39m
+[33m[nodemon] to restart at any time, enter `rs`[39m
+[33m[nodemon] watching path(s): *.*[39m
+[33m[nodemon] watching extensions: ts,json[39m
+[32m[nodemon] starting `ts-node ./src/index.ts`[39m
+Executing (default): SELECT 1+1 AS result
+Executing (default): CREATE TABLE IF NOT EXISTS `Addresses` (`id` UUIDV4 NOT NULL PRIMARY KEY, `city` VARCHAR(30) NOT NULL, `type` VARCHAR(20) NOT NULL, `address` VARCHAR(30) NOT NULL, `country` VARCHAR(30) NOT NULL, `zipCode` VARCHAR(30) NOT NULL, `userId` UUIDV4 NOT NULL, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL);
+Executing (default): PRAGMA INDEX_LIST(`Addresses`)
+Executing (default): PRAGMA INDEX_INFO(`sqlite_autoindex_Addresses_1`)
+Executing (default): CREATE TABLE IF NOT EXISTS `Categories` (`id` UUIDV4 NOT NULL PRIMARY KEY, `name` VARCHAR(50) NOT NULL UNIQUE, `slug` VARCHAR(50) NOT NULL, `description` TEXT, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL);
+Executing (default): PRAGMA INDEX_LIST(`Categories`)
+Executing (default): PRAGMA INDEX_INFO(`sqlite_autoindex_Categories_1`)
+Executing (default): PRAGMA INDEX_INFO(`sqlite_autoindex_Categories_2`)
+Executing (default): CREATE TABLE IF NOT EXISTS `CategoryImages` (`id` UUIDV4 NOT NULL PRIMARY KEY, `filename` VARCHAR(255) NOT NULL, `filepath` VARCHAR(255) NOT NULL, `originalName` VARCHAR(255) NOT NULL, `fileSize` VARCHAR(255) NOT NULL, `categoryId` UUIDV4 NOT NULL, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL);
+Executing (default): PRAGMA INDEX_LIST(`CategoryImages`)
+Executing (default): PRAGMA INDEX_INFO(`sqlite_autoindex_CategoryImages_1`)
+Executing (default): CREATE TABLE IF NOT EXISTS `Comments` (`id` UUIDV4 NOT NULL PRIMARY KEY, `content` VARCHAR(255) NOT NULL, `rating` INTEGER NOT NULL DEFAULT 1, `productId` UUIDV4 NOT NULL, `userId` UUIDV4 NOT NULL, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL);
+Executing (default): PRAGMA INDEX_LIST(`Comments`)
+Executing (default): PRAGMA INDEX_INFO(`sqlite_autoindex_Comments_1`)
+Executing (default): CREATE TABLE IF NOT EXISTS `Orders` (`id` UUIDV4 NOT NULL PRIMARY KEY, `trackingId` VARCHAR(255) NOT NULL, `orderStatus` TEXT DEFAULT 'PROCESSED', `subtotal` DECIMAL(10,2), `userId` UUIDV4 NOT NULL, `addressId` UUIDV4 NOT NULL REFERENCES `Addresses` (`id`), `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL);
+Executing (default): PRAGMA INDEX_LIST(`Orders`)
+Executing (default): PRAGMA INDEX_INFO(`sqlite_autoindex_Orders_1`)
+Executing (default): PRAGMA INDEX_INFO(`orders_tracking_id`)
+Executing (default): CREATE TABLE IF NOT EXISTS `OrderItems` (`id` UUIDV4 PRIMARY KEY, `name` VARCHAR(60) NOT NULL, `slug` VARCHAR(60) NOT NULL, `price` DECIMAL(10,2) NOT NULL, `quantity` INTEGER NOT NULL, `userId` UUIDV4, `orderId` UUIDV4 NOT NULL, `productId` UUIDV4, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL);
+Executing (default): PRAGMA INDEX_LIST(`OrderItems`)
+Executing (default): PRAGMA INDEX_INFO(`sqlite_autoindex_OrderItems_1`)
+Executing (default): PRAGMA INDEX_INFO(`order_items_user_id_order_id`)
+Executing (default): CREATE TABLE IF NOT EXISTS `Products` (`id` UUIDV4 PRIMARY KEY, `name` VARCHAR(50) NOT NULL, `slug` VARCHAR(50) NOT NULL, `brand` VARCHAR(255) NOT NULL, `description` TEXT NOT NULL, `price` DECIMAL(10,2) NOT NULL, `inStock` INTEGER NOT NULL, `sellerId` UUIDV4 NOT NULL, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL);
+Executing (default): PRAGMA INDEX_LIST(`Products`)
+Executing (default): PRAGMA INDEX_INFO(`sqlite_autoindex_Products_1`)
+Executing (default): PRAGMA INDEX_INFO(`products_slug`)
+Executing (default): PRAGMA INDEX_INFO(`products_brand`)
+Executing (default): PRAGMA INDEX_INFO(`products_name`)
+Executing (default): CREATE TABLE IF NOT EXISTS `ProductCategories` (`id` UUIDV4 NOT NULL PRIMARY KEY, `productId` UUIDV4 NOT NULL, `categoryId` UUIDV4 NOT NULL, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL);
+Executing (default): PRAGMA INDEX_LIST(`ProductCategories`)
+Executing (default): PRAGMA INDEX_INFO(`sqlite_autoindex_ProductCategories_1`)
+Executing (default): CREATE TABLE IF NOT EXISTS `ProductTags` (`id` UUIDV4 NOT NULL PRIMARY KEY, `productId` UUIDV4, `tagId` UUIDV4, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL);
+Executing (default): PRAGMA INDEX_LIST(`ProductTags`)
+Executing (default): PRAGMA INDEX_INFO(`sqlite_autoindex_ProductTags_1`)
+Executing (default): CREATE TABLE IF NOT EXISTS `Sellers` (`id` UUIDV4 NOT NULL PRIMARY KEY, `name` VARCHAR(255) NOT NULL, `proprietorName` VARCHAR(255) NOT NULL, `address` TEXT NOT NULL, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL);
+Executing (default): PRAGMA INDEX_LIST(`Sellers`)
+Executing (default): PRAGMA INDEX_INFO(`sqlite_autoindex_Sellers_1`)
+Executing (default): CREATE TABLE IF NOT EXISTS `Tags` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `name` VARCHAR(255), `slug` VARCHAR(255) NOT NULL, `desctiption` TEXT, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL);
+Executing (default): PRAGMA INDEX_LIST(`Tags`)
+Executing (default): CREATE TABLE IF NOT EXISTS `Users` (`name` VARCHAR(255) NOT NULL, `id` UUIDV4 NOT NULL PRIMARY KEY, `username` VARCHAR(255) NOT NULL, `email` VARCHAR(255) NOT NULL UNIQUE, `password` VARCHAR(255) NOT NULL, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL);
+Executing (default): PRAGMA INDEX_LIST(`Users`)
+Executing (default): PRAGMA INDEX_INFO(`sqlite_autoindex_Users_1`)
+Executing (default): PRAGMA INDEX_INFO(`sqlite_autoindex_Users_2`)
+## database succesfully connected!!
+[ PID:14996 ] 🚀 Server already started on http://localhost:5000
+Executing (default): SELECT `Users`.`name`, `Users`.`id`, `Users`.`username`, `Users`.`email`, `Users`.`password`, `Users`.`createdAt`, `Users`.`updatedAt`, `addresses`.`id` AS `addresses.id`, `addresses`.`city` AS `addresses.city`, `addresses`.`type` AS `addresses.type`, `addresses`.`address` AS `addresses.address`, `addresses`.`country` AS `addresses.country`, `addresses`.`zipCode` AS `addresses.zipCode`, `addresses`.`userId` AS `addresses.userId`, `addresses`.`createdAt` AS `addresses.createdAt`, `addresses`.`updatedAt` AS `addresses.updatedAt`, `addresses`.`UserId` AS `addresses.UserId`, `Orders`.`id` AS `Orders.id`, `Orders`.`trackingId` AS `Orders.trackingId`, `Orders`.`orderStatus` AS `Orders.orderStatus`, `Orders`.`subtotal` AS `Orders.subtotal`, `Orders`.`userId` AS `Orders.userId`, `Orders`.`addressId` AS `Orders.addressId`, `Orders`.`createdAt` AS `Orders.createdAt`, `Orders`.`updatedAt` AS `Orders.updatedAt`, `Orders`.`UserId` AS `Orders.UserId` FROM `Users` AS `Users` LEFT OUTER JOIN `Addresses` AS `addresses` ON `Users`.`id` = `addresses`.`UserId` LEFT OUTER JOIN `Orders` AS `Orders` ON `Users`.`id` = `Orders`.`UserId` ORDER BY `Users`.`createdAt` DESC;
+[0mGET /api/users [32m200[0m 26.026 ms - 2739[0m
+Executing (default): SELECT `name`, `id`, `username`, `email`, `password`, `createdAt`, `updatedAt` FROM `Users` AS `Users` WHERE `Users`.`username` = 'satadbi8336' LIMIT 1;
+[0mPOST /api/auth/login [32m200[0m 95.707 ms - 353[0m
+Executing (default): SELECT `Products`.`id`, `Products`.`name`, `Products`.`slug`, `Products`.`brand`, `Products`.`description`, `Products`.`price`, `Products`.`inStock`, `Products`.`sellerId`, `Products`.`createdAt`, `Products`.`updatedAt`, `Products`.`SellerId`, `Seller`.`id` AS `Seller.id`, `Seller`.`name` AS `Seller.name`, `Seller`.`proprietorName` AS `Seller.proprietorName`, `Seller`.`address` AS `Seller.address`, `Seller`.`createdAt` AS `Seller.createdAt`, `Seller`.`updatedAt` AS `Seller.updatedAt`, `categories`.`id` AS `categories.id`, `categories`.`name` AS `categories.name`, `categories`.`slug` AS `categories.slug`, `categories`.`description` AS `categories.description`, `categories`.`createdAt` AS `categories.createdAt`, `categories`.`updatedAt` AS `categories.updatedAt`, `categories->ProductCategories`.`id` AS `categories.ProductCategories.id`, `categories->ProductCategories`.`productId` AS `categories.ProductCategories.productId`, `categories->ProductCategories`.`categoryId` AS `categories.ProductCategories.categoryId`, `categories->ProductCategories`.`createdAt` AS `categories.ProductCategories.createdAt`, `categories->ProductCategories`.`updatedAt` AS `categories.ProductCategories.updatedAt`, `tags`.`id` AS `tags.id`, `tags`.`name` AS `tags.name`, `tags`.`slug` AS `tags.slug`, `tags`.`desctiption` AS `tags.desctiption`, `tags`.`createdAt` AS `tags.createdAt`, `tags`.`updatedAt` AS `tags.updatedAt`, `tags->ProductTags`.`id` AS `tags.ProductTags.id`, `tags->ProductTags`.`productId` AS `tags.ProductTags.productId`, `tags->ProductTags`.`tagId` AS `tags.ProductTags.tagId`, `tags->ProductTags`.`createdAt` AS `tags.ProductTags.createdAt`, `tags->ProductTags`.`updatedAt` AS `tags.ProductTags.updatedAt`, `tags->ProductTags`.`ProductId` AS `tags.ProductTags.ProductId`, `tags->ProductTags`.`TagId` AS `tags.ProductTags.TagId` FROM `Products` AS `Products` LEFT OUTER JOIN `Sellers` AS `Seller` ON `Products`.`SellerId` = `Seller`.`id` LEFT OUTER JOIN `ProductCategories` AS `categories->ProductCategories` ON `Products`.`id` = `categories->ProductCategories`.`productId` LEFT OUTER JOIN `Categories` AS `categories` ON `categories`.`id` = `categories->ProductCategories`.`categoryId` LEFT OUTER JOIN `ProductTags` AS `tags->ProductTags` ON `Products`.`id` = `tags->ProductTags`.`productId` LEFT OUTER JOIN `Tags` AS `tags` ON `tags`.`id` = `tags->ProductTags`.`tagId` ORDER BY `Products`.`createdAt` DESC;
+[0mGET /api/products [32m200[0m 31.882 ms - 8460[0m
+Executing (default): SELECT `Categories`.`id`, `Categories`.`name`, `Categories`.`slug`, `Categories`.`description`, `Categories`.`createdAt`, `Categories`.`updatedAt`, `products`.`id` AS `products.id`, `products`.`name` AS `products.name`, `products`.`slug` AS `products.slug`, `products`.`brand` AS `products.brand`, `products`.`description` AS `products.description`, `products`.`price` AS `products.price`, `products`.`inStock` AS `products.inStock`, `products`.`sellerId` AS `products.sellerId`, `products`.`createdAt` AS `products.createdAt`, `products`.`updatedAt` AS `products.updatedAt`, `products`.`SellerId` AS `products.SellerId`, `products->ProductCategories`.`id` AS `products.ProductCategories.id`, `products->ProductCategories`.`productId` AS `products.ProductCategories.productId`, `products->ProductCategories`.`categoryId` AS `products.ProductCategories.categoryId`, `products->ProductCategories`.`createdAt` AS `products.ProductCategories.createdAt`, `products->ProductCategories`.`updatedAt` AS `products.ProductCategories.updatedAt` FROM `Categories` AS `Categories` LEFT OUTER JOIN `ProductCategories` AS `products->ProductCategories` ON `Categories`.`id` = `products->ProductCategories`.`categoryId` LEFT OUTER JOIN `Products` AS `products` ON `products`.`id` = `products->ProductCategories`.`productId` ORDER BY `Categories`.`createdAt` DESC;
+[0mGET /api/categories [32m200[0m 17.736 ms - 6369[0m
+Executing (default): SELECT `Sellers`.`id`, `Sellers`.`name`, `Sellers`.`proprietorName`, `Sellers`.`address`, `Sellers`.`createdAt`, `Sellers`.`updatedAt`, `products`.`id` AS `products.id`, `products`.`name` AS `products.name`, `products`.`slug` AS `products.slug`, `products`.`brand` AS `products.brand`, `products`.`description` AS `products.description`, `products`.`price` AS `products.price`, `products`.`inStock` AS `products.inStock`, `products`.`sellerId` AS `products.sellerId`, `products`.`createdAt` AS `products.createdAt`, `products`.`updatedAt` AS `products.updatedAt`, `products`.`SellerId` AS `products.SellerId` FROM `Sellers` AS `Sellers` LEFT OUTER JOIN `Products` AS `products` ON `Sellers`.`id` = `products`.`sellerId`;
+[0mGET /api/sellers [32m200[0m 5.463 ms - 1044[0m
+Executing (default): SELECT `Tags`.`id`, `Tags`.`name`, `Tags`.`slug`, `Tags`.`desctiption`, `Tags`.`createdAt`, `Tags`.`updatedAt`, `products`.`id` AS `products.id`, `products`.`name` AS `products.name`, `products`.`slug` AS `products.slug`, `products`.`brand` AS `products.brand`, `products`.`description` AS `products.description`, `products`.`price` AS `products.price`, `products`.`inStock` AS `products.inStock`, `products`.`sellerId` AS `products.sellerId`, `products`.`createdAt` AS `products.createdAt`, `products`.`updatedAt` AS `products.updatedAt`, `products`.`SellerId` AS `products.SellerId`, `products->ProductTags`.`id` AS `products.ProductTags.id`, `products->ProductTags`.`productId` AS `products.ProductTags.productId`, `products->ProductTags`.`tagId` AS `products.ProductTags.tagId`, `products->ProductTags`.`createdAt` AS `products.ProductTags.createdAt`, `products->ProductTags`.`updatedAt` AS `products.ProductTags.updatedAt`, `products->ProductTags`.`ProductId` AS `products.ProductTags.ProductId`, `products->ProductTags`.`TagId` AS `products.ProductTags.TagId` FROM `Tags` AS `Tags` LEFT OUTER JOIN `ProductTags` AS `products->ProductTags` ON `Tags`.`id` = `products->ProductTags`.`tagId` LEFT OUTER JOIN `Products` AS `products` ON `products`.`id` = `products->ProductTags`.`productId`;
+[0mGET /api/tags [32m200[0m 11.373 ms - 4986[0m
+Executing (default): SELECT `name`, `id`, `username`, `email`, `password`, `createdAt`, `updatedAt` FROM `Users` AS `Users` WHERE `Users`.`username` = 'sounishnath003' LIMIT 1;
+[0mPOST /api/auth/login [32m200[0m 92.953 ms - 357[0m
+{
+  verified: {
+    id: 'c409921c-9d02-48d3-adc2-be0e8a9283f1',
+    username: 'sounishnath003',
+    email: 'a@a.com',
+    iat: 1618946053,
+    exp: 1618953253
+  }
+}
+Executing (default): SELECT `name`, `id`, `username`, `email`, `password`, `createdAt`, `updatedAt` FROM `Users` AS `Users` WHERE `Users`.`id` = 'c409921c-9d02-48d3-adc2-be0e8a9283f1';
+Executing (default): SELECT `id`, `trackingId`, `orderStatus`, `subtotal`, `userId`, `addressId`, `createdAt`, `updatedAt`, `UserId` FROM `Orders` AS `Orders` WHERE `Orders`.`userId` = 'c409921c-9d02-48d3-adc2-be0e8a9283f1' GROUP BY `createdAt`;
+[0mPOST /api/auth/user/c409921c-9d02-48d3-adc2-be0e8a9283f1/orders/all [32m200[0m 13.361 ms - 732[0m
+{
+  verified: {
+    id: '3be52fca-dd03-45eb-812e-a716a3421376',
+    username: 'satadbi8336',
+    email: 'b@b.com',
+    iat: 1618945465,
+    exp: 1618952665
+  }
+}
+Executing (default): SELECT `name`, `id`, `username`, `email`, `password`, `createdAt`, `updatedAt` FROM `Users` AS `Users` WHERE `Users`.`id` = '3be52fca-dd03-45eb-812e-a716a3421376';
+{ userId: '3be52fca-dd03-45eb-812e-a716a3421376' }
+Executing (default): INSERT INTO `Orders` (`id`,`trackingId`,`orderStatus`,`userId`,`addressId`,`createdAt`,`updatedAt`) VALUES ($1,$2,$3,$4,$5,$6,$7);
+Executing (default): SELECT `id`, `name`, `slug`, `brand`, `description`, `price`, `inStock`, `sellerId`, `createdAt`, `updatedAt`, `SellerId` FROM `Products` AS `Products` WHERE `Products`.`id` = '4ffe20db-0f72-494b-bc25-a797de76db87';
+Executing (default): INSERT INTO `OrderItems` (`id`,`name`,`slug`,`price`,`quantity`,`userId`,`orderId`,`productId`,`createdAt`,`updatedAt`) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10);
+Executing (default): UPDATE `Products` SET `inStock`=$1,`updatedAt`=$2 WHERE `id` = $3
+Executing (default): UPDATE `Orders` SET `subtotal`=$1,`updatedAt`=$2 WHERE `id` = $3
+Executing (default): UPDATE `Orders` SET `trackingId`=$1,`updatedAt`=$2 WHERE `id` = $3
+[0mPOST /api/orders/create [32m200[0m 922.584 ms - 425[0m
+Executing (default): SELECT `Orders`.`id`, `Orders`.`trackingId`, `Orders`.`orderStatus`, `Orders`.`subtotal`, `Orders`.`userId`, `Orders`.`addressId`, `Orders`.`createdAt`, `Orders`.`updatedAt`, `Orders`.`UserId`, `OrderItems`.`id` AS `OrderItems.id`, `OrderItems`.`name` AS `OrderItems.name`, `OrderItems`.`slug` AS `OrderItems.slug`, `OrderItems`.`price` AS `OrderItems.price`, `OrderItems`.`quantity` AS `OrderItems.quantity`, `OrderItems`.`userId` AS `OrderItems.userId`, `OrderItems`.`orderId` AS `OrderItems.orderId`, `OrderItems`.`productId` AS `OrderItems.productId`, `OrderItems`.`createdAt` AS `OrderItems.createdAt`, `OrderItems`.`updatedAt` AS `OrderItems.updatedAt`, `OrderItems`.`OrderId` AS `OrderItems.OrderId`, `OrderItems`.`ProductId` AS `OrderItems.ProductId`, `Address`.`id` AS `Address.id`, `Address`.`city` AS `Address.city`, `Address`.`type` AS `Address.type`, `Address`.`address` AS `Address.address`, `Address`.`country` AS `Address.country`, `Address`.`zipCode` AS `Address.zipCode`, `Address`.`userId` AS `Address.userId`, `Address`.`createdAt` AS `Address.createdAt`, `Address`.`updatedAt` AS `Address.updatedAt`, `Address`.`UserId` AS `Address.UserId` FROM `Orders` AS `Orders` LEFT OUTER JOIN `OrderItems` AS `OrderItems` ON `Orders`.`id` = `OrderItems`.`OrderId` LEFT OUTER JOIN `Addresses` AS `Address` ON `Orders`.`addressId` = `Address`.`id` ORDER BY `Orders`.`createdAt` DESC;
+[0mGET /api/orders [32m200[0m 15.266 ms - 5426[0m
+{
+  verified: {
+    id: 'c409921c-9d02-48d3-adc2-be0e8a9283f1',
+    username: 'sounishnath003',
+    email: 'a@a.com',
+    iat: 1618946053,
+    exp: 1618953253
+  }
+}
+Executing (default): SELECT `name`, `id`, `username`, `email`, `password`, `createdAt`, `updatedAt` FROM `Users` AS `Users` WHERE `Users`.`id` = 'c409921c-9d02-48d3-adc2-be0e8a9283f1';
+Executing (default): SELECT `id`, `trackingId`, `orderStatus`, `subtotal`, `userId`, `addressId`, `createdAt`, `updatedAt`, `UserId` FROM `Orders` AS `Orders` WHERE `Orders`.`userId` = 'c409921c-9d02-48d3-adc2-be0e8a9283f1' GROUP BY `createdAt`;
+[0mPOST /api/auth/user/c409921c-9d02-48d3-adc2-be0e8a9283f1/orders/all [32m200[0m 6.277 ms - 732[0m

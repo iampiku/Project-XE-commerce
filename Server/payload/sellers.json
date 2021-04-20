@@ -3,38 +3,38 @@
   "status": true,
   "allSellers": [
     {
-      "id": "23880862-483f-4b98-9907-7cfd337558a0",
-      "name": "Apple",
+      "id": "ece18f27-39be-402a-9de1-9ad18af8192e",
+      "name": "ICare, Kolkata",
       "proprietorName": "Steve jobs",
-      "address": "California, USA",
-      "createdAt": "2021-04-17T17:48:54.518Z",
-      "updatedAt": "2021-04-17T17:48:54.518Z",
+      "address": "AC 111, Fancy Market, Kolkata",
+      "createdAt": "2021-04-20T18:47:24.818Z",
+      "updatedAt": "2021-04-20T18:47:24.818Z",
       "products": [
         {
-          "id": "96c37c99-23e8-4449-96fd-83db1731b9f3",
-          "name": "Prestidge Sauspance",
-          "slug": "prestidge-sauspance",
-          "brand": "Prestidge",
-          "description": "Flat design sauspance for womens designers",
-          "price": 2499,
-          "inStock": 87,
-          "sellerId": "23880862-483f-4b98-9907-7cfd337558a0",
-          "createdAt": "2021-04-17T17:52:37.361Z",
-          "updatedAt": "2021-04-17T17:52:37.361Z",
-          "SellerId": "23880862-483f-4b98-9907-7cfd337558a0"
+          "id": "4ffe20db-0f72-494b-bc25-a797de76db87",
+          "name": "Iphone 12 Mini",
+          "slug": "iphone-12-mini",
+          "brand": "Iphone",
+          "description": "New Apple Flagship Line up for A14 Bionic M1 processor",
+          "price": 82999,
+          "inStock": 14,
+          "sellerId": "ece18f27-39be-402a-9de1-9ad18af8192e",
+          "createdAt": "2021-04-20T18:53:53.088Z",
+          "updatedAt": "2021-04-20T19:06:15.650Z",
+          "SellerId": "ece18f27-39be-402a-9de1-9ad18af8192e"
         },
         {
-          "id": "9e012a16-91e0-470d-ac93-2a5c033e1b6f",
+          "id": "fbf02be3-7bc5-4c39-beec-14feec79dbc8",
           "name": "Iphone 12",
           "slug": "iphone-12",
           "brand": "Iphone",
-          "description": "New Apple Flagship Line up for A14 Bionic M1 chip",
+          "description": "New Apple Flagship Line up for A14 Bionic M1 processor",
           "price": 87999,
-          "inStock": 54,
-          "sellerId": "23880862-483f-4b98-9907-7cfd337558a0",
-          "createdAt": "2021-04-17T17:53:36.338Z",
-          "updatedAt": "2021-04-17T17:53:36.338Z",
-          "SellerId": "23880862-483f-4b98-9907-7cfd337558a0"
+          "inStock": 15,
+          "sellerId": "ece18f27-39be-402a-9de1-9ad18af8192e",
+          "createdAt": "2021-04-20T18:49:49.339Z",
+          "updatedAt": "2021-04-20T18:58:56.284Z",
+          "SellerId": "ece18f27-39be-402a-9de1-9ad18af8192e"
         }
       ]
     }
