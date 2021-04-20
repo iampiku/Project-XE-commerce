@@ -1,16 +1,33 @@
 import { Router } from "express";
 import { Model } from "sequelize";
-import { Order, OrderItem, Product } from "../../database/schema";
+import { Address, Order, OrderItem, Product } from "../../database/schema";
 import {
   FORBIDDEN,
+  INTERNAL_SERVER_ERROR,
   OK,
   OrderItemInterface,
   requiresAuth,
   SUCCESS,
-  warn
+  warn,
 } from "../utils";
 
 const router = Router();
+
+router.get("/", async (req, res, next) => {
+  // Added for future admin references (Do not touch!)
+  // await OrderItem.destroy({truncate: true });
+  // await Order.destroy({truncate: true });
+  try {
+    const orders = await Order.findAll({
+      include: [{ model: OrderItem }, { model: Address }],
+      order: [["createdAt", "DESC"]],
+    });
+    return res.status(OK).send({ ...SUCCESS, orders });
+  } catch (error) {
+    next(warn(res, INTERNAL_SERVER_ERROR, error));
+  }
+  next();
+});
 
 router.post("/create", requiresAuth, async (req, res, next) => {
   let orderId: string | null = null;
@@ -38,14 +55,24 @@ router.post("/create", requiresAuth, async (req, res, next) => {
      */
     let subtotal: number = 0;
     for (const orderItem of orderItems) {
-      const fetchedProduct = await Product.findByPk(orderItem.productId);
-      const productStock: number = fetchedProduct?.getDataValue("inStock");
-      const slug: string = fetchedProduct?.getDataValue("slug");
-      const name: string = fetchedProduct?.getDataValue("name");
-      const price: number = fetchedProduct?.getDataValue("price");
+      const fetchedProduct: Model<any, any> | null = await Product.findByPk(
+        orderItem.productId
+      );
+
+      if (fetchedProduct === null) {
+        throw new Error("product cannot be found!!");
+      }
+
+      const productStock: number = await fetchedProduct?.getDataValue(
+        "inStock"
+      );
+      const slug: string = await fetchedProduct?.getDataValue("slug");
+      const name: string = await fetchedProduct?.getDataValue("name");
+      const price: number = await fetchedProduct?.getDataValue("price");
 
       // If quantity order is bigger than stock QTY - ThrowError()
       if (orderItem.quantity > productStock) {
+        await Order.destroy({ where: { id: orderId } });
         next(
           warn(res, FORBIDDEN, "required quantity are not present in stock!")
         );
@@ -72,19 +99,23 @@ router.post("/create", requiresAuth, async (req, res, next) => {
        *  On successfull orderItem placing
        * reducer the inStock of Product
        */
-      await Product.update(
-        { inStock: updatedInStockQty },
-        { where: { id: orderItem.productId } }
-      );
+      await fetchedProduct?.update({ inStock: updatedInStockQty });
+      await fetchedProduct?.save();
 
       subtotal += price * orderItem.quantity;
     }
+
+    await createdOrderRef.update({ subtotal });
+    await createdOrderRef.save();
 
     return res
       .status(OK)
       .send({ ...SUCCESS, userId, order: createdOrderRef, subtotal });
   } catch (error) {
-    orderId !== null ? await Order.destroy({ where: { id: orderId } }) : null;
+    if (orderId !== null) {
+      // await OrderItem.destroy({ where: { orderId } });
+      await Order.destroy({ where: { id: orderId } });
+    }
     warn(res, FORBIDDEN, error || "You are not authorized");
   }
   next();

@@ -1,4 +1,5 @@
 import _ from "lodash";
+import { DECIMAL } from "sequelize";
 import { ENUM, Model, ModelCtor, STRING, UUIDV4, VIRTUAL } from "sequelize";
 import { v4 as uuid } from "uuid";
 import { db } from "..";
@@ -27,6 +28,7 @@ export const Order: ModelCtor<Model<any, any>> = db.define(
       ],
       defaultValue: ORDER_STATUS.PROCESSED,
     },
+    subtotal: { type: DECIMAL(10, 2) },
     orderStatusString: {
       type: VIRTUAL,
       get: function () {

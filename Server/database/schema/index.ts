@@ -66,9 +66,9 @@ async function buildAssociationsBetweenSchemas() {
   Comment.belongsTo(Product, { onDelete: `cascade` });
   Comment.belongsTo(User);
 
-  Order.hasMany(OrderItem);
+  Order.hasMany(OrderItem, { onDelete: "cascade" });
   Order.belongsTo(User, { foreignKey: `userId` });
-  Order.belongsTo(Address , { foreignKey: `addressId` });
+  Order.belongsTo(Address, { foreignKey: `addressId` });
 
   OrderItem.belongsTo(Order);
   OrderItem.belongsTo(Product);

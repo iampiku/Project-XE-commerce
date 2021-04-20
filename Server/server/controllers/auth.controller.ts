@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { Address, Order, OrderItem, User } from "../../database/schema";
+import { Address, Order, User } from "../../database/schema";
 import {
   compareWithHashifiedPassword,
   FORBIDDEN,
@@ -10,7 +10,7 @@ import {
   SignupInterface,
   SUCCESS,
   uuid,
-  warn,
+  warn
 } from "../utils";
 
 const router = Router();
@@ -37,6 +37,7 @@ router.post("/signup", async (req, res, next) => {
       token,
       ...SUCCESS,
       userId: resp.id,
+      isLoggedIn: true,
       message: `user account has been created!`,
     });
   } catch (error) {

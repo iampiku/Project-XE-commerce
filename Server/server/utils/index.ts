@@ -52,7 +52,8 @@ export interface SignupInterface {
 }
 
 /** JSONWebToken SECRET */
-export const SECRET = `BHS@^%&%!*&^87/#$bj1agcs%$#^%$@%^fgyavsdu765712678356416JHSA^&@%^&!$%$`;
+export const SECRET = 'e3c99ea48a54c3f4b710d65ebd7592e17d6c4ed112ffc58f595d4d94a409d6b78570801cd79cdeffb3d3cea8f91122cd824c21bb91cf39981410b17252da218b';
+
 type TokenInterface = {
   id: string;
   username: string;
@@ -118,7 +119,6 @@ export const ORDER_STATUS = {
   DELIVERED: { ordinal: 1 },
   SHIPPED: { ordinal: 2 },
 };
-
 
 /** Type Definations */
 
