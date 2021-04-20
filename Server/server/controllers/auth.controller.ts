@@ -10,7 +10,7 @@ import {
   SignupInterface,
   SUCCESS,
   uuid,
-  warn
+  warn,
 } from "../utils";
 
 const router = Router();
