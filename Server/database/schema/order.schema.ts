@@ -1,13 +1,13 @@
 import _ from "lodash";
+import { ENUM, Model, ModelCtor, STRING, UUIDV4, VIRTUAL } from "sequelize";
 import { v4 as uuid } from "uuid";
-import { Model, ModelCtor, STRING, UUIDV4, VIRTUAL } from "sequelize";
 import { db } from "..";
 
 /** Order Status - [Processed, Delivered, Shipped] */
 export const ORDER_STATUS = {
-  PROCESSED: { ordinal: 0 },
-  DELIVERED: { ordinal: 1 },
-  SHIPPED: { ordinal: 2 },
+  PROCESSED: "PROCESSED",
+  DELIVERED: "DELIVERED",
+  SHIPPED: "SHIPPED",
 };
 
 export const Order: ModelCtor<Model<any, any>> = db.define(
@@ -16,19 +16,23 @@ export const Order: ModelCtor<Model<any, any>> = db.define(
     id: { type: UUIDV4, primaryKey: true, allowNull: false },
     trackingId: { type: STRING, allowNull: false },
     orderStatus: {
-      type: STRING,
+      type: ENUM,
       values: [
-        String(ORDER_STATUS.PROCESSED.ordinal),
-        String(ORDER_STATUS.DELIVERED.ordinal),
-        String(ORDER_STATUS.SHIPPED.ordinal),
+        // String(ORDER_STATUS.PROCESSED.ordinal),
+        // String(ORDER_STATUS.DELIVERED.ordinal),
+        // String(ORDER_STATUS.SHIPPED.ordinal),
+        ORDER_STATUS.PROCESSED,
+        ORDER_STATUS.DELIVERED,
+        ORDER_STATUS.SHIPPED,
       ],
+      defaultValue: ORDER_STATUS.PROCESSED,
     },
     orderStatusString: {
       type: VIRTUAL,
       get: function () {
         let res: string | null = null;
         _.forOwn(ORDER_STATUS, (v, k) => {
-          if (String(v.ordinal) === this.getDataValue("orderStatus")) res = k;
+          if (String(v) === this.getDataValue("orderStatus")) res = k;
           return res;
         });
       },

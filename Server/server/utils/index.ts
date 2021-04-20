@@ -66,7 +66,8 @@ export function generateAuthToken(resp: any) {
       username: resp.dataValues.username,
       email: resp.dataValues.email,
     } as TokenInterface,
-    SECRET
+    SECRET,
+    { expiresIn: "2h" }
   );
 }
 
@@ -81,22 +82,24 @@ export const requiresAuth = (req: any, res: any, next: any) => {
     /** Else Continue for check */
     const token = req.headers["authorization"].split(" ")[1] as string;
 
-    setAuthorizationHeader(res, token);
-
     if (!token) {
       return next(warn(res, FORBIDDEN, "You are not authorized"));
     }
     const verified: TokenInterface = verify(token, SECRET) as TokenInterface;
     console.log({ verified });
 
+    setAuthorizationHeader(res, token);
+
     return User.findOne({ where: { id: verified.id } }).then((userPresent) => {
-      if (userPresent) return next();
-      else {
+      if (userPresent) {
+        req.userId = verified.id;
+        return next();
+      } else {
         return next(warn(res, FORBIDDEN, "User credentials does not found!"));
       }
     });
   } catch (error) {
-    return next(error);
+    return next(warn(res, FORBIDDEN, error));
   }
 };
 
@@ -115,3 +118,17 @@ export const ORDER_STATUS = {
   DELIVERED: { ordinal: 1 },
   SHIPPED: { ordinal: 2 },
 };
+
+
+/** Type Definations */
+
+/** OrderItem Interface for making Order for a user */
+export interface OrderItemInterface {
+  orderItems: OrderItem[];
+  addressId: string;
+}
+
+export interface OrderItem {
+  productId: string;
+  quantity: number;
+}

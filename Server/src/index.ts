@@ -1,3 +1,3 @@
-import { serverStartt } from "../server";
+import { kickStartTheServer } from "../server";
 
-serverStartt();
+kickStartTheServer();

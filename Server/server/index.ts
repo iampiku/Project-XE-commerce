@@ -11,25 +11,34 @@ const PORT = 5000 || process.env.PORT;
 
 const app = express();
 
-/** 
+/**
  * A Worker object contains all public information and method about a worker. In the master it can be obtained using cluster.workers. In a worker it can be obtained using cluster.worker
- * 
+ *
  * Server will spawn up new Instances depending upon the core of the host machine.
- * 
+ *
  * For Development my machine 4cores and concurrency level 100 SET
  */
-export function serverStartt() {
-  if (isMaster) {
-    console.log(`## 🔼 Master Server: ${pid} has been started...`);
-    for (const cpu of cpus()) {
-      fork();
-    }
-  } else {
-    internalServerStart();
-  }
+export function kickStartTheServer() {
+  /**
+   * INFO:
+   * Can be enable in Production
+   * But for developement
+   * I think it is not required for now!!
+   */
+
+  // if (isMaster) {
+  //   console.log(`## 🔼 Master Server: ${pid} has been started...`);
+  //   for (const cpu of cpus()) {
+  //     fork();
+  //   }
+  // } else {
+  //   internalServerStart();
+  // }
+
+  internalServerStart();
 }
 
-export async function internalServerStart() {
+async function internalServerStart() {
   try {
     await serverConfig();
     await connectToDatabase();
