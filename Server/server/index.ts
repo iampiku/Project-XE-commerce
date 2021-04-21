@@ -1,6 +1,7 @@
 import { fork, isMaster } from "cluster";
 import cors from "cors";
 import express, { json, urlencoded } from "express";
+import fileUpload from "express-fileupload";
 import morgan from "morgan";
 import { cpus } from "os";
 import { pid } from "process";
@@ -45,7 +46,15 @@ async function internalServerStart() {
     await connectToDatabase();
     await (async () => {
       buildAssociationsBetweenSchemas();
-
+      /** Building up the UserPermissionRoles
+       * Pure RoleBased Authentication
+       * When ever user tries to signup - he/she will
+       * directly automatically assigned to `RoleInterface.CUSTOMER` permissions
+       *
+       * At the beginning - we can set a `RoleInterface.SuperAdmin` permission to a 1 user
+       *
+       * others who else wanna sell, can be associated with`RoleInterface.SELLER` permission
+       */
       Role.findOne({ where: { role: RoleInterface.CUSTOMER } }).then((m) => {
         if (m == null) {
           (async function () {
@@ -71,6 +80,13 @@ async function internalServerStart() {
 }
 
 async function serverConfig() {
+  // express-fileupload setup middleware
+  app.use(
+    fileUpload({
+      useTempFiles: true,
+      tempFileDir: `/tmp/`,
+    })
+  );
   app.use(json());
   app.use(cors());
   app.use(morgan("dev"));

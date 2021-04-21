@@ -2,6 +2,7 @@ import { Router } from "express";
 import { INTERNAL_SERVER_ERROR, OK } from "../utils";
 import AuthController from "./auth.controller";
 import CategoryController from "./category.controller";
+import FileUploadController from "./fileUpload.controller";
 import OrderController from "./order.controller";
 import ProductController from "./product.controller";
 import RoleController from "./role.controller";
@@ -35,5 +36,6 @@ router.use("/sellers", SellerController);
 router.use("/tags", TagController);
 router.use("/orders", OrderController);
 router.use('/roles', RoleController);
+router.use('/file-uploads', FileUploadController);
 
 export default router;
