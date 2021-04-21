@@ -7,6 +7,7 @@ import { OrderItem } from "./orderItem.schema";
 import { Product } from "./product.schema";
 import { ProductCategory } from "./productCategory.schema";
 import { ProductTag } from "./productTag.schema";
+import { Role } from "./role.schema";
 import { Seller } from "./seller.schema";
 import { Tag } from "./tag.schema";
 import { User } from "./user.schema";
@@ -49,6 +50,8 @@ async function buildAssociationsBetweenSchemas() {
    * Tag.belongsToMany(Product, {through: ProductTag, as: 'products', foreignKey: 'tagId', otherKey: 'productId'});
    */
 
+  User.belongsTo(Role, { foreignKey: "roleId" });
+  Role.hasMany(User);
   User.hasMany(Comment);
   User.hasMany(Address, { as: "addresses" });
   User.hasMany(Order);
@@ -66,7 +69,11 @@ async function buildAssociationsBetweenSchemas() {
   Comment.belongsTo(Product, { onDelete: `cascade` });
   Comment.belongsTo(User);
 
-  Order.hasMany(OrderItem, { onDelete: "cascade" });
+  Order.hasMany(OrderItem, {
+    onDelete: "cascade",
+    foreignKey: "orderId",
+    as: "orderItems",
+  });
   Order.belongsTo(User, { foreignKey: `userId` });
   Order.belongsTo(Address, { foreignKey: `addressId` });
 

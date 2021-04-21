@@ -1,5 +1,6 @@
 import { Router } from "express";
-import { Address, Order, User } from "../../database/schema";
+import { Address, Order, OrderItem, User } from "../../database/schema";
+import { Role, RoleInterface } from "../../database/schema/role.schema";
 import {
   compareWithHashifiedPassword,
   FORBIDDEN,
@@ -20,9 +21,15 @@ router.post("/signup", async (req, res, next) => {
   try {
     const { name, email, password, username } = req.body as SignupInterface;
 
+    // Setting up Default Role as ~ CustomerRole
+    const customerRole = await Role.findOne({
+      where: { role: RoleInterface.CUSTOMER },
+    });
+
     const payload = {
       name,
       email,
+      roleId: (customerRole as any).dataValues.id,
       id: uuid(),
       username,
       password,
@@ -118,15 +125,17 @@ router.post("/logout", requiresAuth, async (req, res, next) => {
 });
 
 // [POST] Getting all orders for the user
-router.post("/user/:id/orders/all", requiresAuth, async (req, res, next) => {
+router.post("/user/orders/all", requiresAuth, async (req, res, next) => {
   try {
-    const { id } = req.params as { id: string };
+    const { userId } = req as any;
+
     /** Getting all the orders from OrderSchema for UserId = `id` */
     const allOrders = await Order.findAll({
-      where: { userId: id },
-      group: ["createdAt"],
+      include: [{ model: OrderItem, as: "orderItems" }, { model: Address }],
+      where: { userId },
+      order: [["createdAt", "DESC"]],
     });
-    return res.status(OK).send({ ...SUCCESS, allOrders, userId: id });
+    return res.status(OK).send({ ...SUCCESS, allOrders, userId });
   } catch (error) {
     warn(res, FORBIDDEN, error || "You are not authorized");
   }

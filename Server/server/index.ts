@@ -6,6 +6,7 @@ import { cpus } from "os";
 import { pid } from "process";
 import { connectToDatabase } from "../database";
 import { buildAssociationsBetweenSchemas } from "../database/schema";
+import { Role, RoleInterface } from "../database/schema/role.schema";
 import { APIController } from "./controllers";
 const PORT = 5000 || process.env.PORT;
 
@@ -26,16 +27,16 @@ export function kickStartTheServer() {
    * I think it is not required for now!!
    */
 
-  if (isMaster) {
-    console.log(`## 🔼 Master Server: ${pid} has been started...`);
-    for (const cpu of cpus()) {
-      fork();
-    }
-  } else {
-    internalServerStart();
-  }
+  // if (isMaster) {
+  //   console.log(`## 🔼 Master Server: ${pid} has been started...`);
+  //   for (const cpu of cpus()) {
+  //     fork();
+  //   }
+  // } else {
+  //   internalServerStart();
+  // }
 
-  // internalServerStart();
+  internalServerStart();
 }
 
 async function internalServerStart() {
@@ -44,6 +45,17 @@ async function internalServerStart() {
     await connectToDatabase();
     await (async () => {
       buildAssociationsBetweenSchemas();
+
+      Role.findOne({ where: { role: RoleInterface.CUSTOMER } }).then((m) => {
+        if (m == null) {
+          (async function () {
+            // await Role.destroy({ truncate: true });
+            await Role.create({ role: "ADMIN" });
+            await Role.create({ role: "CUSTOMER" });
+            await Role.create({ role: "SELLER" });
+          })();
+        }
+      });
     })();
 
     app.use("/api", APIController);

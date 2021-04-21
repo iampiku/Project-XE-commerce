@@ -4,6 +4,7 @@ import AuthController from "./auth.controller";
 import CategoryController from "./category.controller";
 import OrderController from "./order.controller";
 import ProductController from "./product.controller";
+import RoleController from "./role.controller";
 import SellerController from "./seller.controller";
 import TagController from "./tags.controller";
 import UserController from "./user.controller";
@@ -33,5 +34,6 @@ router.use("/categories", CategoryController);
 router.use("/sellers", SellerController);
 router.use("/tags", TagController);
 router.use("/orders", OrderController);
+router.use('/roles', RoleController);
 
 export default router;
