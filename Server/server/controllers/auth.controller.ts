@@ -125,7 +125,7 @@ router.post("/logout", requiresAuth, async (req, res, next) => {
 });
 
 // [POST] Getting all orders for the user
-router.post("/user/orders/all", requiresAuth, async (req, res, next) => {
+router.get("/user/orders/all", requiresAuth, async (req, res, next) => {
   try {
     const { userId } = req as any;
 
