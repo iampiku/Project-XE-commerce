@@ -1,5 +1,9 @@
-import { Router } from "express";
-import { INTERNAL_SERVER_ERROR, OK } from "../utils";
+import { Router, static as st } from "express";
+import {
+  FileUploadFolderStaticServe,
+  INTERNAL_SERVER_ERROR,
+  OK
+} from "../utils";
 import AuthController from "./auth.controller";
 import CategoryController from "./category.controller";
 import FileUploadService from "./microservices/fileUpload.service";
@@ -11,6 +15,14 @@ import TagController from "./tags.controller";
 import UserController from "./user.controller";
 
 const router = Router();
+
+router.use(
+  st(FileUploadFolderStaticServe, {
+    cacheControl: true,
+    immutable: true,
+    fallthrough: true,
+  })
+);
 
 router.get("/data", async (req, res, next) => {
   try {

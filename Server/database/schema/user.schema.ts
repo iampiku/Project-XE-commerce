@@ -1,7 +1,6 @@
 import { genSaltSync, hashSync } from "bcrypt";
 import Sequelize, { UUIDV4 } from "sequelize";
 import { db } from "..";
-import { Role, RoleInterface } from "./role.schema";
 
 export const User: Sequelize.ModelCtor<Sequelize.Model<any, any>> = db.define(
   "Users",
@@ -12,6 +11,7 @@ export const User: Sequelize.ModelCtor<Sequelize.Model<any, any>> = db.define(
     email: { type: Sequelize.STRING, allowNull: false, unique: true },
     password: { type: Sequelize.STRING, allowNull: false },
     roleId: { type: UUIDV4, allowNull: false },
+    avatar: { type: Sequelize.STRING },
   },
   {
     freezeTableName: true,

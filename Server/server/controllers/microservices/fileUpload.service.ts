@@ -4,16 +4,19 @@ import {
   FORBIDDEN,
   handleMutipleFilesUpload,
   handleSingleFileUpload,
+  handleSingleFileUploadMiddleWare,
   Next,
   OK,
   RequestInterface,
+  requiresAuth,
   ResponseInterface,
   SUCCESS,
-  warn
+  warn,
 } from "../../utils";
 
 const router = Router();
 
+// [POST] Generic FileUpload Function
 router.post(
   "/",
   async (req: RequestInterface, res: ResponseInterface, next: Next) => {
@@ -27,12 +30,12 @@ router.post(
 
       // For single File Upload
       if ((files as any).length === undefined) {
-        return await handleSingleFileUpload(files, res);
+        return await handleSingleFileUpload(files as FileUploadInterface);
       }
 
-      // Looping through various 
+      // Looping through various
       // fileIterators and storing them - Multiple FileUploads
-      await handleMutipleFilesUpload(files);
+      await handleMutipleFilesUpload(files as FileUploadInterface[]);
 
       return res.status(OK).send({
         ...SUCCESS,
@@ -43,6 +46,26 @@ router.post(
     }
 
     next();
+  }
+);
+
+// [POST] User Avatar Upload Service
+
+router.post(
+  "/user-avatar",
+  requiresAuth,
+  handleSingleFileUploadMiddleWare,
+  async (req: RequestInterface, res: ResponseInterface, next: Next) => {
+    try {
+      const avatarPath = (req as any).avatarPath;
+      return res.status(OK).send({
+        ...SUCCESS,
+        avatarPath,
+        message: "user profile picture uploaded successfully!",
+      });
+    } catch (error) {
+      warn(res, FORBIDDEN, error || "You are not authroized");
+    }
   }
 );
 

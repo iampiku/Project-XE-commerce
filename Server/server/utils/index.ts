@@ -2,7 +2,9 @@ import { compare } from "bcrypt";
 import { NextFunction } from "express";
 import { Request as RQ, Response as R } from "express-serve-static-core";
 import { sign, verify } from "jsonwebtoken";
+import { extname } from "path";
 import { join } from "path";
+import { Model } from "sequelize";
 import { v4 } from "uuid";
 import { User } from "../../database/schema";
 
@@ -17,6 +19,8 @@ export const FileUploadDirectoryPath = join(
   "public",
   "uploads"
 );
+
+export const FileUploadFolderStaticServe = join(__dirname, "..", "public");
 
 // Acceptable FileFormat Only any type of images/*
 export type AcceptableFileFormat = "image/*";
@@ -35,24 +39,44 @@ export interface FileUploadInterface {
 }
 
 // For Uploading Single ImageFile Only
-export async function handleSingleFileUpload(
-  files: FileUploadInterface | FileUploadInterface[],
-  res: ResponseInterface
-) {
+export async function handleSingleFileUpload(files: FileUploadInterface) {
   const savePath = `${FileUploadDirectoryPath}/${
     (files as FileUploadInterface).name
   }`;
   await (files as FileUploadInterface).mv(savePath);
-  return res.status(OK).send({
-    ...SUCCESS,
-    message: `File has been successfully uploaded!`,
-  });
+}
+
+export async function handleSingleFileUploadMiddleWare(
+  req: Request,
+  res: Response,
+  next: Next
+) {
+  // first getting userId from requiresAuth middleware
+
+  try {
+    const userId: string = (req as any).userId as string;
+    const file: FileUploadInterface = (req.files as any).file;
+    const fileName = `${(file as FileUploadInterface).md5}${extname(
+      file.name
+    )}`;
+    const savePath = `${FileUploadDirectoryPath}/${fileName}`;
+    await (file as FileUploadInterface).mv(savePath);
+
+    const userObj: Model<any, any> = (await User.findByPk(userId)) as Model;
+
+    (userObj as any).avatar = `/uploads/${fileName}`;
+
+    (req as any).avatarPath = `/uploads/${fileName}`;
+    await userObj.save();
+
+    return next();
+  } catch (error) {
+    return next(error);
+  }
 }
 
 // For Uploading Multiple ImageFiles Only
-export async function handleMutipleFilesUpload(
-  files: FileUploadInterface | FileUploadInterface[]
-) {
+export async function handleMutipleFilesUpload(files: FileUploadInterface[]) {
   for (const file of files as FileUploadInterface[]) {
     const savePath = `${FileUploadDirectoryPath}/${file.name}`;
     await file.mv(savePath);
