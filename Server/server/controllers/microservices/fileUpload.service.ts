@@ -9,7 +9,7 @@ import {
   RequestInterface,
   ResponseInterface,
   SUCCESS,
-  warn,
+  warn
 } from "../../utils";
 
 const router = Router();
