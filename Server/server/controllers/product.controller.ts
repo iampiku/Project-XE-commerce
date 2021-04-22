@@ -7,6 +7,7 @@ import {
   ProductTag,
   Tag
 } from "../../database/schema";
+import { FileUpload } from "../../database/schema";
 import { Seller } from "../../database/schema/seller.schema";
 import { INTERNAL_SERVER_ERROR, OK, SUCCESS, warn } from "../utils";
 
@@ -19,6 +20,7 @@ router.get("/", async (req, res, next) => {
       include: [
         { model: Seller },
         { model: Category, as: "categories" },
+        {model: FileUpload, as: 'images'},
         { model: Tag, as: "tags" },
       ],
       order: [["createdAt", "DESC"]],

@@ -2,12 +2,13 @@ import { compare } from "bcrypt";
 import { NextFunction } from "express";
 import { Request as RQ, Response as R } from "express-serve-static-core";
 import { sign, verify } from "jsonwebtoken";
-import { extname } from "path";
-import { join } from "path";
+import { extname, join } from "path";
 import { Model } from "sequelize";
 import { v4 } from "uuid";
 import { User } from "../../database/schema";
+import { FileUpload } from "../../database/schema/fileupload.schema";
 
+/** Express Req, Res, Next ~ `TypeDefinations` for Typescript support :-) */
 export type ResponseInterface = R;
 export type RequestInterface = RQ;
 export type Next = NextFunction;
@@ -20,6 +21,7 @@ export const FileUploadDirectoryPath = join(
   "uploads"
 );
 
+/** for serving as static assets - public/uploads */
 export const FileUploadFolderStaticServe = join(__dirname, "..", "public");
 
 // Acceptable FileFormat Only any type of images/*
@@ -38,7 +40,7 @@ export interface FileUploadInterface {
   mv: (saveFilePath: string) => Promise<any>;
 }
 
-// For Uploading Single ImageFile Only
+// For Uploading Single ImageFile Only - [SPL. GENERIC SUPPORT]
 export async function handleSingleFileUpload(files: FileUploadInterface) {
   const savePath = `${FileUploadDirectoryPath}/${
     (files as FileUploadInterface).name
@@ -46,19 +48,20 @@ export async function handleSingleFileUpload(files: FileUploadInterface) {
   await (files as FileUploadInterface).mv(savePath);
 }
 
+/** MiddleWare support for singleFileUpload (eg. ProfilePicture, ...) */
 export async function handleSingleFileUploadMiddleWare(
-  req: Request,
-  res: Response,
+  req: RequestInterface,
+  res: ResponseInterface,
   next: Next
 ) {
-  // first getting userId from requiresAuth middleware
-
   try {
+    // first getting userId from requiresAuth middleware
     const userId: string = (req as any).userId as string;
     const file: FileUploadInterface = (req.files as any).file;
     const fileName = `${(file as FileUploadInterface).md5}${extname(
       file.name
     )}`;
+    // naming the saving path
     const savePath = `${FileUploadDirectoryPath}/${fileName}`;
     await (file as FileUploadInterface).mv(savePath);
 
@@ -75,11 +78,48 @@ export async function handleSingleFileUploadMiddleWare(
   }
 }
 
-// For Uploading Multiple ImageFiles Only
+// For Uploading Multiple ImageFiles Only - [SPL. GENERIC SUPPORT]
 export async function handleMutipleFilesUpload(files: FileUploadInterface[]) {
   for (const file of files as FileUploadInterface[]) {
     const savePath = `${FileUploadDirectoryPath}/${file.name}`;
     await file.mv(savePath);
+  }
+}
+
+export async function handleMultipleFilesUploadMiddleWare(
+  req: RequestInterface,
+  res: ResponseInterface,
+  next: Next
+) {
+  try {
+    const { productId } = req.params;
+    const files: FileUploadInterface[] = (req.files as any).files;
+
+    const uploadImages: string[] = [];
+
+    for (const file of files) {
+      const fileName: string = `${file.md5}${extname(file.name)}`;
+      const savePath: string = `${FileUploadDirectoryPath}/${fileName}`;
+      await file.mv(savePath);
+
+      uploadImages.push(`/uploads/${fileName}`);
+
+      const finalFilePayload = {
+        ...file,
+        originalName: file.name,
+        name: fileName,
+        storagePath: `/uploads/${fileName}`,
+        productId,
+      };
+
+      await FileUpload.create(finalFilePayload);
+    }
+    (req as any).uploadImages = uploadImages;
+    return next();
+  } catch (error) {
+    return next(
+      warn(res, INTERNAL_SERVER_ERROR, error || "No files has been uploaded!!")
+    );
   }
 }
 

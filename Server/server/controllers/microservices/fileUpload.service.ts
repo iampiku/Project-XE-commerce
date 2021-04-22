@@ -2,16 +2,18 @@ import { Router } from "express";
 import {
   FileUploadInterface,
   FORBIDDEN,
+  handleMultipleFilesUploadMiddleWare,
   handleMutipleFilesUpload,
   handleSingleFileUpload,
   handleSingleFileUploadMiddleWare,
+  INTERNAL_SERVER_ERROR,
   Next,
   OK,
   RequestInterface,
   requiresAuth,
   ResponseInterface,
   SUCCESS,
-  warn,
+  warn
 } from "../../utils";
 
 const router = Router();
@@ -50,7 +52,6 @@ router.post(
 );
 
 // [POST] User Avatar Upload Service
-
 router.post(
   "/user-avatar",
   requiresAuth,
@@ -65,6 +66,24 @@ router.post(
       });
     } catch (error) {
       warn(res, FORBIDDEN, error || "You are not authroized");
+    }
+  }
+);
+
+router.post(
+  "/:productId/product-images",
+  handleMultipleFilesUploadMiddleWare,
+  async (req: RequestInterface, res: ResponseInterface, next: Next) => {
+    try {
+      const uploadImages = (req as any).uploadImages;
+
+      return res.status(OK).send({
+        ...SUCCESS,
+        uploadImages,
+        message: "all images has been uploaded!",
+      });
+    } catch (error) {
+      return warn(res, INTERNAL_SERVER_ERROR, error);
     }
   }
 );

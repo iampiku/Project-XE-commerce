@@ -10,8 +10,8 @@ import {
   setAuthorizationHeader,
   SignupInterface,
   SUCCESS,
-  uuid,
-  warn,
+
+  warn
 } from "../utils";
 
 const router = Router();
@@ -30,7 +30,6 @@ router.post("/signup", async (req, res, next) => {
       name,
       email,
       roleId: (customerRole as any).dataValues.id,
-      id: uuid(),
       username,
       password,
     };

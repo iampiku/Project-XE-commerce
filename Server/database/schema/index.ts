@@ -2,6 +2,7 @@ import { Address } from "./address.schema";
 import { Category } from "./category.schema";
 import { CategoryImage } from "./categoryImage.schema";
 import { Comment } from "./comment.schema";
+import { FileUpload } from "./fileupload.schema";
 import { Order } from "./order.schema";
 import { OrderItem } from "./orderItem.schema";
 import { Product } from "./product.schema";
@@ -96,6 +97,8 @@ async function buildAssociationsBetweenSchemas() {
 
   Product.belongsTo(Seller);
 
+  Product.hasMany(FileUpload, { as: "images", foreignKey: "productId" });
+
   Seller.hasMany(Product, {
     as: "products",
     foreignKey: `sellerId`,
@@ -125,6 +128,7 @@ export {
   ProductCategory,
   ProductTag,
   buildAssociationsBetweenSchemas,
+  FileUpload,
 };
 
 // Product.create({ name: 'Pixel 3A2', price: 45454, description: 'New Pixel Lineup', inStock: 20, categoryId: '3ac48ed6-7c00-444c-978d-e76facb9bb6c' });
