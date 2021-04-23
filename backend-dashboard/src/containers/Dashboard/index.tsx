@@ -9,7 +9,7 @@ const Dashboard: React.FC<DashboardProps> = ({}: DashboardProps) => {
     <Container>
       <GridLayout>
         <SideNavbar />
-        <div className="overflow-y-auto flex flex-col items-center justify-center">
+        <div className="overflow-y-auto flex flex-col items-center justify-start">
           2
         </div>
         <div className="sticky">3</div>

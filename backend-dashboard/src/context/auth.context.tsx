@@ -5,7 +5,13 @@ import type {
 } from "src/models";
 import { Error, Login, Success } from "../components";
 import { Dashboard } from "../containers";
-import { stopEventBubbling } from "../utils";
+import {
+  clearLocalStorage,
+  setAuthTokenLs,
+  setIsLoggedInLs,
+  setUserIdLs,
+  stopEventBubbling,
+} from "../utils";
 
 export interface AuthContextState {
   token: string | null;
@@ -89,10 +95,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
       }, 2600);
 
       // clear out everything from LS
-      localStorage.clear();
-      localStorage.setItem("token", `Bearer ${resp.token}`);
+      clearLocalStorage();
+      setAuthTokenLs(resp.token);
+      setUserIdLs(resp.userId);
+      setIsLoggedInLs(resp.isLoggedIn);
       localStorage.setItem("currentUser", JSON.stringify(resp));
-      
     } catch (error) {
       setAuthState({
         ...authState,
