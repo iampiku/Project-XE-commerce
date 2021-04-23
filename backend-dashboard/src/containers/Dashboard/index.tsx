@@ -1,13 +1,19 @@
-import React from 'react';
-import Container from '../../components/Container';
+import React from "react";
+import { SideNavbar } from "../../components";
+import Container from "../../components/Container";
+import "./style.css";
 
 interface DashboardProps {}
 
 const Dashboard: React.FC<DashboardProps> = ({}: DashboardProps) => {
   return (
     <Container>
-      <div className="text-blue-600 cursor-pointer p-2 inline-flex">
-        Dashboard
+      <div className="grid-container">
+        <SideNavbar />
+        <div className="overflow-y-auto flex flex-col items-center justify-center">
+          2
+        </div>
+        <div className="sticky">3</div>
       </div>
     </Container>
   );
