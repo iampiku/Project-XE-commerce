@@ -5,13 +5,13 @@ import {
   compareWithHashifiedPassword,
   FORBIDDEN,
   generateAuthToken,
+  INTERNAL_SERVER_ERROR,
   OK,
   requiresAuth,
   setAuthorizationHeader,
   SignupInterface,
   SUCCESS,
-
-  warn
+  warn,
 } from "../utils";
 
 const router = Router();
@@ -34,6 +34,22 @@ router.post("/signup", async (req, res, next) => {
       password,
     };
 
+    // Some perfoming Sanity Checks
+    // If Username Exists
+    // Or UserEmail Exists
+    const checkIfUserNameExists = await User.findOne({
+      where: { username },
+    });
+    if (checkIfUserNameExists) {
+      return warn(res, INTERNAL_SERVER_ERROR, "Username already taken");
+    }
+    const checkIfEmailExists = await User.findOne({
+      where: { email },
+    });
+    if (checkIfUserNameExists || checkIfEmailExists) {
+      return warn(res, INTERNAL_SERVER_ERROR, "User email is already taken");
+    }
+
     const resp: any = await User.create(payload);
     const token = generateAuthToken(resp);
 
@@ -47,7 +63,7 @@ router.post("/signup", async (req, res, next) => {
       message: `user account has been created!`,
     });
   } catch (error) {
-    warn(res, FORBIDDEN, error);
+    warn(res, FORBIDDEN, "User account already exists!");
   }
   next();
 });

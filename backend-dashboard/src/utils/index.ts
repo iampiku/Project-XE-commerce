@@ -1,3 +1,5 @@
+import Cookies from "js-cookie";
+
 type Event = React.FormEvent<HTMLFormElement> | any;
 
 export function stopEventBubbling(e: Event) {
@@ -6,30 +8,44 @@ export function stopEventBubbling(e: Event) {
 }
 
 /** LocalStorage SettingKeys for Future Ref. */
-export function setAuthTokenLs(token: string) {
-  localStorage.setItem("token", `Bearer ${token}`);
+export function setAuthTokenCookie(token: string) {
+  Cookies.set("token", `Bearer ${token}`);
 }
 
-export function getAuthTokenLs(): string {
-  return localStorage.getItem("token") as string;
+export function getAuthTokenCookie(): string {
+  return Cookies.get("token") as string;
 }
 
-export function setIsLoggedInLs(isLoggedIn: boolean) {
-  localStorage.setItem("isLoggedIn", `${isLoggedIn}`);
+export function setIsLoggedInCookie(isLoggedIn: boolean) {
+  Cookies.set("isLoggedIn", `${isLoggedIn}`);
 }
 
-export function getIsLoggedInLs(): boolean {
-  return (localStorage.getItem("isLoggedIn") as any) as boolean;
+export function getIsLoggedInCookie(): boolean {
+  return (Cookies.get("isLoggedIn") as any) as boolean;
 }
 
-export function setUserIdLs(userId: string) {
-  localStorage.setItem("userId", `${userId}`);
+export function setUserIdCookie(userId: string) {
+  Cookies.set("userId", `${userId}`);
 }
 
-export function getUserIdLs(): string {
-  return localStorage.getItem("userId") as string;
+export function getUserIdCookie(): string {
+  return Cookies.get("userId") as string;
 }
 
-export function clearLocalStorage() {
+export function setAuthStateOfCurrentUser(payload: any) {
+  if (payload.message) {
+    delete payload.message;
+  }
+  Cookies.set("currentUser", JSON.stringify(payload));
+}
+
+export function getAuthStateOfCuurentUser() {
+  return JSON.parse(Cookies.get("currentUser") as any);
+}
+
+export function clearAllCookieStorage() {
   localStorage.clear();
+  Cookies.remove("token");
+  Cookies.remove("isLoggedIn");
+  Cookies.remove("userId");
 }

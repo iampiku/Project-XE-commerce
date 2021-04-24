@@ -1,6 +1,6 @@
 FROM node
 
-RUN apt-get update && apt-get install -y curl
+RUN npm install -g npm@7.11.1
 
 RUN mkdir -p /src/app
 
@@ -10,6 +10,6 @@ COPY . .
 
 RUN npm install
 
-CMD [ "npm", "start" ]
-
 EXPOSE 8080
+
+CMD [ "npm", "start" ]

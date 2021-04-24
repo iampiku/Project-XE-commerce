@@ -1,6 +1,7 @@
 import React from "react";
 import { AuthContext, useAuth } from "../../context/auth.context";
 import { DashboardLogo, LockClosedIcon } from "../../assets/icons";
+import { Link } from "react-router-dom";
 
 interface LoginProps {}
 const Login: React.FC<LoginProps> = ({}: LoginProps) => {
@@ -60,7 +61,7 @@ const Login: React.FC<LoginProps> = ({}: LoginProps) => {
                   autoComplete="username"
                   required
                   className="input-box-tr"
-                  placeholder="Email address"
+                  placeholder="Username"
                   value={loginCredentials.username}
                   onChange={handleChange}
                 />
@@ -116,6 +117,18 @@ const Login: React.FC<LoginProps> = ({}: LoginProps) => {
                 </span>
                 Sign in
               </button>
+            </div>
+            <div className="my-3">
+              <div className="text-sm text-center">
+                <Link
+                  to="/signup"
+                  about="Register or signup for a new Seller/account"
+                  className="font-medium text-gray-400 hover:text-gray-500"
+                >
+                  Don't have an account?{" "}
+                  <span className="text-blue-500">Signup</span>
+                </Link>
+              </div>
             </div>
           </form>
         </div>

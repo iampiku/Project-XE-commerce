@@ -1,19 +1,25 @@
 import React from "react";
+import { Switch } from "react-router-dom";
+import { Error, Success } from "../components";
 import type {
   LoginCredentialInterface,
   LoginResponseInterface,
-} from "src/models";
-import { Error, Login, Success } from "../components";
-import { Dashboard } from "../containers";
+  SignupCredentialsInterface,
+  SignupResponseInterface,
+} from "../models";
+import { AuthenticatedRoutes, UnAuthenticatedRoutes } from "../routes";
 import {
-  clearLocalStorage,
-  setAuthTokenLs,
-  setIsLoggedInLs,
-  setUserIdLs,
+  clearAllCookieStorage,
+  getAuthStateOfCuurentUser,
+  getAuthTokenCookie,
+  setAuthStateOfCurrentUser,
+  setAuthTokenCookie,
+  setIsLoggedInCookie,
+  setUserIdCookie,
   stopEventBubbling,
 } from "../utils";
 
-export interface AuthContextState {
+interface AuthContextState {
   token: string | null;
   isLoggedIn: boolean;
   userId: string | null;
@@ -21,6 +27,7 @@ export interface AuthContextState {
   error: string | null;
   message: string | null;
   login: Function;
+  signup: Function;
 }
 
 const initialAuthState: AuthContextState = {
@@ -31,6 +38,7 @@ const initialAuthState: AuthContextState = {
   message: null,
   setAuthState: () => {},
   login: () => {},
+  signup: () => {},
 };
 
 export const AuthContext = React.createContext<AuthContextState>(
@@ -54,13 +62,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
   );
 
   React.useEffect(() => {
-    const tokenFromLs = localStorage.getItem("token");
-    if (tokenFromLs) {
-      const parsedCurrentUserFromLs: AuthContextState = JSON.parse(
-        localStorage.getItem("currentUser") as string
-      );
-      setAuthState(parsedCurrentUserFromLs);
-    }
+    const tokenFromCookie = getAuthTokenCookie();
+    // revalidating user using CookieStorage
+    if (tokenFromCookie) setAuthState(getAuthStateOfCuurentUser());
   }, []);
 
   /** Function for Logging in */
@@ -94,12 +98,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
         setAuthState({ ...authState, ...resp, message: null });
       }, 2600);
 
-      // clear out everything from LS
-      clearLocalStorage();
-      setAuthTokenLs(resp.token);
-      setUserIdLs(resp.userId);
-      setIsLoggedInLs(resp.isLoggedIn);
-      localStorage.setItem("currentUser", JSON.stringify(resp));
+      // clear out everything from CookieStorage
+      clearAllCookieStorage();
+      setAuthStateOfCurrentUser(resp);
+      setAuthTokenCookie(resp.token);
+      setUserIdCookie(resp.userId);
+      setIsLoggedInCookie(resp.isLoggedIn);
     } catch (error) {
       setAuthState({
         ...authState,
@@ -111,11 +115,70 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
     }
   }
 
+  async function signup(e: any, signupCredentials: SignupCredentialsInterface) {
+    stopEventBubbling(e);
+    try {
+      const resp: SignupResponseInterface = (await (
+        await fetch("/api/auth/signup", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(signupCredentials),
+        })
+      ).json()) as SignupResponseInterface;
+
+      // On unsuccessfull attempt
+      if (resp.statusCode !== 200) {
+        setAuthState({ ...authState, error: `${resp.error}` });
+        setTimeout(() => {
+          setAuthState({ ...authState, error: null });
+        }, 2600);
+        return;
+      }
+
+      // On succesfull request resolved
+      setAuthState({ ...authState, ...resp, message: `${resp.message}` });
+      /** reset the successfull loggedIn message to null */
+      setTimeout(() => {
+        setAuthState({ ...authState, ...resp, message: null });
+      }, 2600);
+
+      // clear out everything from CookieStorage
+      clearAllCookieStorage();
+      setAuthStateOfCurrentUser(resp);
+      setAuthTokenCookie(resp.token);
+      setUserIdCookie(resp.userId);
+      setIsLoggedInCookie(resp.isLoggedIn);
+      document.location.replace("/");
+    } catch (error) {
+      setAuthState({
+        ...authState,
+        error: "It seems you are currently offline!",
+      });
+      setTimeout(() => {
+        setAuthState({ ...authState, message: null, error: null });
+      }, 2600);
+    }
+  }
+
+  /** TODO: Loggout Function needs to be implemented */
+  async function logout() {
+    /** do something usefull,
+     * cancel subscriptions
+     * reset state values */
+  }
+
   return (
-    <AuthContext.Provider value={{ ...authState, setAuthState, login }}>
+    <AuthContext.Provider value={{ ...authState, setAuthState, login, signup }}>
       <Error error={authState.error} />
       <Success message={authState.message} />
-      {authState.isLoggedIn ? <Dashboard /> : <Login />}
+
+      <Switch>
+        {authState.isLoggedIn ? (
+          <AuthenticatedRoutes />
+        ) : (
+          <UnAuthenticatedRoutes />
+        )}
+      </Switch>
     </AuthContext.Provider>
   );
 };
