@@ -4,7 +4,7 @@ interface SideNavbarProps {}
 
 const SideNavbar: React.FC<SideNavbarProps> = ({}: SideNavbarProps) => {
   return (
-    <aside className="sticky rounded bg-gray-50 border-r- min-h-screen">
+    <aside className="sticky rounded border-r min-h-screen">
       <div className="border-b w-full text-blue-700 cursor-pointer p-2 inline-flex">
         Dashboard
       </div>

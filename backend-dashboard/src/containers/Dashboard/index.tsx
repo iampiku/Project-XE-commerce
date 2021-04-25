@@ -1,6 +1,6 @@
 import React from "react";
+import { Container, Main, RightSideNavBar } from "..";
 import { GridLayout, SideNavbar } from "../../components";
-import Container from "../../components/Container";
 
 interface DashboardProps {}
 
@@ -9,10 +9,8 @@ const Dashboard: React.FC<DashboardProps> = ({}: DashboardProps) => {
     <Container>
       <GridLayout>
         <SideNavbar />
-        <div className="overflow-y-auto flex flex-col items-center justify-start">
-          2
-        </div>
-        <div className="sticky">3</div>
+        <Main />
+        <RightSideNavBar />
       </GridLayout>
     </Container>
   );
