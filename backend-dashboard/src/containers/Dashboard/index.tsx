@@ -1,19 +1,14 @@
 import React from "react";
-import { Container, Main, RightSideNavBar } from "..";
-import { GridLayout, SideNavbar } from "../../components";
 
-interface DashboardProps {}
+interface DashboardProps {
+}
 
 const Dashboard: React.FC<DashboardProps> = ({}: DashboardProps) => {
-  return (
-    <Container>
-      <GridLayout>
-        <SideNavbar />
-        <Main />
-        <RightSideNavBar />
-      </GridLayout>
-    </Container>
-  );
+    return (
+        <React.Fragment>
+            <div className="text-sm text-indigo-700">Dashboard Content Area</div>
+        </React.Fragment>
+    );
 };
 
 export default Dashboard;

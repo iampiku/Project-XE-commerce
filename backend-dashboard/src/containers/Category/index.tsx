@@ -1,13 +1,14 @@
 import React from "react";
 
-interface CategoryProps {}
+interface CategoryProps {
+}
 
 const Category: React.FC<CategoryProps> = ({}: CategoryProps) => {
-  return (
-    <div className="overflow-y-auto flex flex-col items-center justify-start">
-      2
-    </div>
-  );
+    return (
+        <React.Fragment>
+            <div className="text-sm text-indigo-700">Category Content Area</div>
+        </React.Fragment>
+    );
 };
 
 export default Category;
