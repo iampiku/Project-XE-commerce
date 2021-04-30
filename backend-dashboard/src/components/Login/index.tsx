@@ -1,7 +1,7 @@
 import React from "react";
-import { AuthContext, useAuth } from "../../context/auth.context";
-import { DashboardLogo, LockClosedIcon } from "../../assets/icons";
 import { Link } from "react-router-dom";
+import { DashboardLogo, LockClosedIcon } from "../../assets/icons";
+import { useAuth } from "../../context/auth.context";
 
 interface LoginProps {}
 const Login: React.FC<LoginProps> = ({}: LoginProps) => {

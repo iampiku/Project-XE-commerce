@@ -28,6 +28,7 @@ interface AuthContextState {
   message: string | null;
   login: Function;
   signup: Function;
+  logout: Function;
 }
 
 const initialAuthState: AuthContextState = {
@@ -39,6 +40,7 @@ const initialAuthState: AuthContextState = {
   setAuthState: () => {},
   login: () => {},
   signup: () => {},
+  logout: () => {},
 };
 
 export const AuthContext = React.createContext<AuthContextState>(
@@ -165,10 +167,40 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
     /** do something usefull,
      * cancel subscriptions
      * reset state values */
+
+    try {
+      const resp: any = await (
+        await fetch("/api/auth/logout", {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json",
+            authorization: getAuthTokenCookie(),
+          },
+        })
+      ).json();
+
+      if (resp.status === true) {
+        setAuthState({ ...initialAuthState });
+        clearAllCookieStorage();
+        return;
+      } else {
+        authState.error = resp.error;
+        setTimeout(() => {
+          setAuthState({ ...authState, error: null });
+        }, 2600);
+      }
+    } catch (error) {
+      authState.error = "Whoops!! Something went wrong!";
+      setTimeout(() => {
+        setAuthState({ ...authState, error: null });
+      }, 2600);
+    }
   }
 
   return (
-    <AuthContext.Provider value={{ ...authState, setAuthState, login, signup }}>
+    <AuthContext.Provider
+      value={{ ...authState, setAuthState, login, signup, logout }}
+    >
       <Error error={authState.error} />
       <Success message={authState.message} />
 

@@ -48,4 +48,5 @@ export function clearAllCookieStorage() {
   Cookies.remove("token");
   Cookies.remove("isLoggedIn");
   Cookies.remove("userId");
+  Cookies.remove("currentUser");
 }
