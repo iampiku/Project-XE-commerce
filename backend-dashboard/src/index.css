@@ -55,7 +55,7 @@
 /** MAIN CONTENT AREA */
 
 .main-content-area {
-  @apply overflow-y-auto bg-indigo-50 p-2 flex flex-col items-center justify-start
+  @apply overflow-y-auto bg-gray-50 p-2 flex flex-col items-center justify-start
 }
 
 .nav-link {
