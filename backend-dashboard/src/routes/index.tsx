@@ -2,11 +2,12 @@ import React from "react";
 import {Route} from "react-router-dom";
 import {GridLayout, Login, SideNavbar, SignUp} from "../components";
 import {Category, Container, Dashboard, RightSideNavBar} from "../containers";
+import {AppStateContextProvider} from "../context/appState.context";
 
 export function AuthenticatedRoutes() {
     console.log(`render authenticated routes`);
     return (
-        <React.Fragment>
+        <AppStateContextProvider>
             <Container>
                 <GridLayout>
                     <SideNavbar/>
@@ -17,7 +18,7 @@ export function AuthenticatedRoutes() {
                     <RightSideNavBar/>
                 </GridLayout>
             </Container>
-        </React.Fragment>
+        </AppStateContextProvider>
     );
 }
 

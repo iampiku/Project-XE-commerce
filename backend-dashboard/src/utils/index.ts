@@ -1,4 +1,5 @@
 import Cookies from "js-cookie";
+import React from "react";
 
 type Event = React.FormEvent<HTMLFormElement> | any;
 
@@ -50,3 +51,19 @@ export function clearAllCookieStorage() {
   Cookies.remove("userId");
   Cookies.remove("currentUser");
 }
+
+// AppState Contexts + Reducers
+
+export interface AppStateInterface {
+  state: any;
+  dispatch: React.Dispatch<any>;
+}
+
+export const appStateInitial = {
+  categories: [],
+  products: [],
+  dispatch: (action: any) => {
+  }
+}
+
+export const AppStateContext = React.createContext(appStateInitial);
