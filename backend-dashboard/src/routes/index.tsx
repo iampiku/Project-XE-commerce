@@ -1,6 +1,6 @@
 import React from "react";
 import {Route} from "react-router-dom";
-import {GridLayout, Login, SideNavbar, SignUp} from "../components";
+import {CategoryDetails, GridLayout, Login, SideNavbar, SignUp} from "../components";
 import {Category, Container, Dashboard, RightSideNavBar} from "../containers";
 import {AppStateContextProvider} from "../context/appState.context";
 
@@ -13,7 +13,8 @@ export function AuthenticatedRoutes() {
                     <SideNavbar/>
                     <div className="main-content-area">
                         <Route exact={true} path={"/"} component={Dashboard}/>
-                        <Route exact={true} path={'/categories'} component={Category}/>
+                        <Route exact={true} path={'/categories'} component={Category} />
+                        <Route exact={true} path={'/categories/:categorySlug'} component={CategoryDetails} />
                     </div>
                     <RightSideNavBar/>
                 </GridLayout>

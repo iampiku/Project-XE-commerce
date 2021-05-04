@@ -6,6 +6,7 @@ import Login from "./Login";
 import SideNavbar from "./SideNavbar";
 import SignUp from "./Signup";
 import Success from "./Success";
+import CategoryDetails from './CategoryDetails';
 
 export {
     InputBox,
@@ -16,5 +17,6 @@ export {
     Success,
     SideNavbar,
     GridLayout,
+    CategoryDetails,
 };
 

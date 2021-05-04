@@ -26,7 +26,7 @@ router.post("/create", async (req, res, next) => {
   try {
     const resp = await Category.create(req.body);
     return res.status(OK).send({
-      resp,
+      category: resp,
       ...SUCCESS,
       message: `${req.body.name} category has been created`,
     });

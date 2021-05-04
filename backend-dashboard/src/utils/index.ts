@@ -62,6 +62,7 @@ export interface AppStateInterface {
 export const appStateInitial = {
   categories: [],
   products: [],
+  currentCategory: null,
   dispatch: (action: any) => {
   }
 }
