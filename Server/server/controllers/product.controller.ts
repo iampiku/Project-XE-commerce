@@ -9,12 +9,21 @@ import {
 } from "../../database/schema";
 import { FileUpload } from "../../database/schema";
 import { Seller } from "../../database/schema/seller.schema";
-import { INTERNAL_SERVER_ERROR, OK, SUCCESS, warn } from "../utils";
+import {
+  INTERNAL_SERVER_ERROR,
+  Next,
+  OK,
+  RequestInterface,
+  requiresAuth, requiresToBeSeller,
+  ResponseInterface,
+  SUCCESS,
+  warn
+} from "../utils";
 
 const router = Router();
 
 // [GET] All products listed
-router.get("/", async (req, res, next) => {
+router.get("/", async (req: RequestInterface, res: ResponseInterface , next: Next) => {
   try {
     const allProducts = await Product.findAll({
       include: [
@@ -34,9 +43,10 @@ router.get("/", async (req, res, next) => {
   next();
 });
 
-router.post("/create", async (req, res, next) => {
+router.post("/create", requiresAuth, requiresToBeSeller ,async (req, res, next) => {
   try {
-    const payload = req.body;
+    const sellerId = (req as any).userId; // grabbing the userId as sellerId from the middleware!
+    const payload = {...req.body, sellerId};
     const resp = await Product.create(payload);
     if (payload.categoryIds) {
       for (const categoryId of payload.categoryIds) {
@@ -61,7 +71,7 @@ router.post("/create", async (req, res, next) => {
 
 // [GET] Search Product By Id/slug : api/products/search?id=8a0216c9-f0d5-4e1e-8e52-89a76caa0848
 // [GET] Full Text Based searching functionlity added
-router.get("/search", async (req, res, next) => {
+router.get("/search", requiresAuth, async (req, res, next) => {
   try {
     const searchParams: any = req.query;
     /** Find by Id */

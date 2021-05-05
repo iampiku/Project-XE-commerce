@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { Product } from "../../database/schema";
 import { Seller } from "../../database/schema/seller.schema";
-import { INTERNAL_SERVER_ERROR, OK, SUCCESS, warn } from "../utils";
+import {INTERNAL_SERVER_ERROR, OK, requiresToBeAdmin, SUCCESS, warn} from "../utils";
 
 const router = Router();
 
@@ -19,7 +19,7 @@ router.get("/", async (req, res, next) => {
   next();
 });
 
-router.post("/create", async (req, res, next) => {
+router.post("/create", requiresToBeAdmin, async (req, res, next) => {
   try {
     const resp = await Seller.create(req.body);
     return res

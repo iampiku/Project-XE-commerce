@@ -27,7 +27,7 @@ export const User: Sequelize.ModelCtor<Sequelize.Model<any, any>> = db.define(
       },
       beforeValidate: function(user: any, options)  {
         user.id = uuid();
-      }
+      },
     },
   }
 );

@@ -16,7 +16,7 @@ async function connectToDatabase() {
   try {
     await db.authenticate();
     await db.sync();
-    console.log(`## database succesfully connected!!`);
+    console.log(`## database successfully connected!!`);
     await buildSchema();
   } catch (error) {
     throw new Error(JSON.stringify(error, null, 3));

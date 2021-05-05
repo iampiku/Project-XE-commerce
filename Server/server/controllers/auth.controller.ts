@@ -170,4 +170,7 @@ router.post("/user/address/create", requiresAuth, async (req, res, next) => {
   next();
 });
 
+// [POST upgrading an existing user to a SELLER!
+
+
 export default router;
