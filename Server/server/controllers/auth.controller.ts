@@ -180,7 +180,7 @@ router.post ('/upgrade-profile' , requiresAuth , requiresToBeAdmin , async (req:
         const {userId} = req.body;
         const sellerRoleInstance = await Role.findOne ({where :{role :RoleInterface.SELLER}});
         const sellerRoleId = sellerRoleInstance?.getDataValue ('id');
-        const userInstance = await User.findOne ({where :{id : userId}});
+        const userInstance = await User.findOne ({where :{id :userId}});
         (userInstance as any).roleId = sellerRoleId;
         await userInstance?.save ();
         return res.status (OK).send ({...SUCCESS , message :`user has been upgraded to a seller!`});
