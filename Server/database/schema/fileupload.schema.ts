@@ -24,7 +24,7 @@ export const FileUpload: ModelCtor<Model<any, any>> = db.define(
     encoding: { type: STRING, allowNull: false },
     tempFilePath: { type: STRING, allowNull: false },
     mimetype: { type: STRING, allowNull: false },
-    storagePath: {type: STRING, allowNull: false},
+    storagePath: { type: STRING, allowNull: false },
     productId: { type: UUIDV4, allowNull: false },
   },
   {

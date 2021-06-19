@@ -25,7 +25,11 @@ router.get("/", async (req, res, next) => {
   // await Order.destroy({truncate: true });
   try {
     const orders = await Order.findAll({
-      include: [{ model: OrderItem, as: 'orderItems' }, { model: Address }, { model: User }],
+      include: [
+        { model: OrderItem, as: "orderItems" },
+        { model: Address },
+        { model: User },
+      ],
       order: [["createdAt", "DESC"]],
     });
     return res.status(OK).send({ ...SUCCESS, orders });

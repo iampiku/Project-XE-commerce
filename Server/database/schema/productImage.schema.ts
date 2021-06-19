@@ -4,7 +4,7 @@ import { db } from "..";
 
 /** might be not neccassry as of now
  * did not calculate the `functional dependency` yet!!
- * Hope, not too much dependent on schemas like - 
+ * Hope, not too much dependent on schemas like -
  * Products / Categories
  */
 export const ProductImage = db.define(

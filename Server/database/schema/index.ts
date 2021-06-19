@@ -98,7 +98,7 @@ async function buildAssociationsBetweenSchemas() {
   Product.belongsTo(Seller);
   Product.hasMany(FileUpload, { as: "images", foreignKey: "productId" });
 
-  Seller.belongsTo(User, {as: 'seller', foreignKey: 'userId'});
+  Seller.belongsTo(User, { as: "seller", foreignKey: "userId" });
   Seller.hasMany(Product, {
     as: "products",
     foreignKey: `sellerId`,

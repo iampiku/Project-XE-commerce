@@ -181,7 +181,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
 
       if (resp.status === true) {
         setAuthState({ ...initialAuthState });
-        window.location.replace('/')
+        window.location.replace("/");
         clearAllCookieStorage();
         return;
       } else {

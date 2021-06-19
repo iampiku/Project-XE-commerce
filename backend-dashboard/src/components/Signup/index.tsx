@@ -29,7 +29,7 @@ const SignUp: React.FC<SignupProps> = ({}: SignupProps) => {
   }
 
   async function onSignup(e: any) {
-   await  signup(e, signupCredentials);
+    await signup(e, signupCredentials);
   }
 
   return (

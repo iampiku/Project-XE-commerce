@@ -6,17 +6,16 @@ import Login from "./Login";
 import SideNavbar from "./SideNavbar";
 import SignUp from "./Signup";
 import Success from "./Success";
-import CategoryDetails from './CategoryDetails';
+import CategoryDetails from "./CategoryDetails";
 
 export {
-    InputBox,
-    Container,
-    SignUp,
-    Login,
-    Error,
-    Success,
-    SideNavbar,
-    GridLayout,
-    CategoryDetails,
+  InputBox,
+  Container,
+  SignUp,
+  Login,
+  Error,
+  Success,
+  SideNavbar,
+  GridLayout,
+  CategoryDetails,
 };
-

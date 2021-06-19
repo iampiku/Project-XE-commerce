@@ -1,6 +1,6 @@
 import { genSaltSync, hashSync } from "bcrypt";
 import Sequelize, { UUIDV4 } from "sequelize";
-import { v4 as uuid } from 'uuid';
+import { v4 as uuid } from "uuid";
 import { db } from "..";
 
 export const User: Sequelize.ModelCtor<Sequelize.Model<any, any>> = db.define(
@@ -25,7 +25,7 @@ export const User: Sequelize.ModelCtor<Sequelize.Model<any, any>> = db.define(
         ); // 10 rounds of salt, loke bole dite
         user.password = hashifiedPassword;
       },
-      beforeValidate: function(user: any, options)  {
+      beforeValidate: function (user: any, options) {
         user.id = uuid();
       },
     },

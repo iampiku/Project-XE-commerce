@@ -1,7 +1,13 @@
 import { Router } from "express";
 import { Product } from "../../database/schema";
 import { Seller } from "../../database/schema/seller.schema";
-import {INTERNAL_SERVER_ERROR, OK, requiresToBeAdmin, SUCCESS, warn} from "../utils";
+import {
+  INTERNAL_SERVER_ERROR,
+  OK,
+  requiresToBeAdmin,
+  SUCCESS,
+  warn,
+} from "../utils";
 
 const router = Router();
 

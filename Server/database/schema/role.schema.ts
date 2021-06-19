@@ -11,7 +11,7 @@ export const RoleInterface = {
 export const Role = db.define(
   "Roles",
   {
-    id: {type: UUIDV4, allowNull: false, primaryKey: true },
+    id: { type: UUIDV4, allowNull: false, primaryKey: true },
     role: {
       type: ENUM,
       values: [

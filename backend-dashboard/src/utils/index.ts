@@ -63,8 +63,7 @@ export const appStateInitial = {
   categories: [],
   products: [],
   currentCategory: null,
-  dispatch: (action: any) => {
-  }
-}
+  dispatch: (action: any) => {},
+};
 
 export const AppStateContext = React.createContext(appStateInitial);

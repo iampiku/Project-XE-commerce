@@ -2,7 +2,7 @@ import { Router, static as st } from "express";
 import {
   FileUploadFolderStaticServe,
   INTERNAL_SERVER_ERROR,
-  OK
+  OK,
 } from "../utils";
 import AuthController from "./auth.controller";
 import CategoryController from "./category.controller";

@@ -12,7 +12,7 @@ router.get("/", async (req, res, next) => {
         model: Product,
         as: "products",
       },
-      order: [['createdAt', 'DESC']]
+      order: [["createdAt", "DESC"]],
     });
 
     return res.status(OK).send({ ...SUCCESS, allCategories });

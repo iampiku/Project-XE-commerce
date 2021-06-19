@@ -28,7 +28,10 @@ const SideNavbar: React.FC<SideNavbarProps> = ({}: SideNavbarProps) => {
         <div className={"nav-link"}>
           <div className="m-2 tracking-wide">Orders</div>
         </div>
-        <div onClick={() => logout()} className="text-sm flex text-red-500 hover:text-red-700 hover:bg-red-50 w-full rounded flex-row space-x-2 cursor-pointer space-x-2">
+        <div
+          onClick={() => logout()}
+          className="text-sm flex text-red-500 hover:text-red-700 hover:bg-red-50 w-full rounded flex-row space-x-2 cursor-pointer space-x-2"
+        >
           <div className="my-2">
             {" "}
             <LogoutIcon color={"red"} size={20} />{" "}
